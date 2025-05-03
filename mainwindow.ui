@@ -2,28 +2,89 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>800</width>
-    <height>600</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>24</height>
-    </rect>
-   </property>
+  <property name="geometry"><rect><x>0</x><y>0</y><width>800</width><height>600</height></rect></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="mainLayout">
+
+    <!-- Sensorwaarden -->
+    <item>
+     <widget class="QGroupBox" name="groupBoxSensors">
+      <property name="title"><string>Live Sensorwaarden</string></property>
+      <layout class="QGridLayout" name="layoutSensors">
+       <item row="0" column="0"><widget class="QLabel" name="labelTemp"><property name="text"><string>Temperatuur:</string></property></widget></item>
+       <item row="0" column="1"><widget class="QLCDNumber" name="lcdTemp"/></item>
+       <item row="1" column="0"><widget class="QLabel" name="labelCO2"><property name="text"><string>CO2:</string></property></widget></item>
+       <item row="1" column="1"><widget class="QLCDNumber" name="lcdCO2"/></item>
+       <item row="2" column="0"><widget class="QLabel" name="labelHumidity"><property name="text"><string>Luchtvochtigheid:</string></property></widget></item>
+       <item row="2" column="1"><widget class="QLCDNumber" name="lcdHumidity"/></item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- RGB Verlichting -->
+    <item>
+     <widget class="QGroupBox" name="groupBoxRGB">
+      <property name="title"><string>RGB Verlichting</string></property>
+      <layout class="QVBoxLayout" name="layoutRGB">
+       <item><widget class="QCheckBox" name="checkBoxLightOn"><property name="text"><string>Lamp aan</string></property></widget></item>
+       <item><widget class="QSlider" name="sliderR"><property name="maximum"><number>255</number></property><property name="orientation"><enum>Qt::Horizontal</enum></property></widget></item>
+       <item><widget class="QSlider" name="sliderG"><property name="maximum"><number>255</number></property><property name="orientation"><enum>Qt::Horizontal</enum></property></widget></item>
+       <item><widget class="QSlider" name="sliderB"><property name="maximum"><number>255</number></property><property name="orientation"><enum>Qt::Horizontal</enum></property></widget></item>
+       <item><widget class="QPushButton" name="btnSetColor"><property name="text"><string>Stel kleur in</string></property></widget></item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- Dagmenu -->
+    <item>
+     <widget class="QGroupBox" name="groupBoxDagmenu">
+      <property name="title"><string>Dagmenu</string></property>
+      <layout class="QVBoxLayout" name="layoutDagmenu">
+       <item><widget class="QTextEdit" name="textEditMenuInput"/></item>
+       <item><widget class="QPushButton" name="btnPublishMenu"><property name="text"><string>Publiceer Menu</string></property></widget></item>
+       <item><widget class="QLabel" name="labelCurrentMenu"><property name="text"><string>-</string></property></widget></item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- CO2 Ventilator -->
+    <item>
+     <widget class="QGroupBox" name="groupBoxVentilator">
+      <property name="title"><string>Ventilator</string></property>
+      <layout class="QHBoxLayout" name="layoutVentilator">
+       <item><widget class="QPushButton" name="btnVentilatorAan"><property name="text"><string>Aan</string></property></widget></item>
+       <item><widget class="QPushButton" name="btnVentilatorUit"><property name="text"><string>Uit</string></property></widget></item>
+       <item><widget class="QLabel" name="labelVentilatorStatus"><property name="text"><string>Uit</string></property></widget></item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- Lichtkrant -->
+    <item>
+     <widget class="QGroupBox" name="groupBoxLichtkrant">
+      <property name="title"><string>Lichtkrant</string></property>
+      <layout class="QVBoxLayout" name="layoutLichtkrant">
+       <item><widget class="QLineEdit" name="lineEditLichtkrant"/></item>
+       <item><widget class="QPushButton" name="btnUpdateLichtkrant"><property name="text"><string>Update Lichtkrant</string></property></widget></item>
+       <item><widget class="QLabel" name="labelLichtkrant"><property name="text"><string>-</string></property></widget></item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- Tafels -->
+    <item>
+     <widget class="QGroupBox" name="groupBoxTafel">
+      <property name="title"><string>Tafelstatus</string></property>
+      <layout class="QHBoxLayout" name="layoutTafel">
+       <item><widget class="QPushButton" name="btnTafelToggle"><property name="text"><string>Toggle tafel</string></property></widget></item>
+       <item><widget class="QLabel" name="labelTafelStatus"><property name="text"><string>Tafel staat UIT</string></property></widget></item>
+      </layout>
+     </widget>
+    </item>
+
+   </layout>
   </widget>
+  <widget class="QMenuBar" name="menubar"/>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
