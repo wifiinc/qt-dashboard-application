@@ -2,6 +2,11 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 
+// Toevoegen voor toegang tot de structs
+extern "C" {
+#include "packets.h"
+}
+
 // Constructor van MainWindow
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -33,30 +38,49 @@ MainWindow::~MainWindow() {
 
 // Wordt uitgevoerd als op 'Stel kleur in' wordt geklikt
 void MainWindow::on_btnSetColor_clicked() {
-    // Als het lampje uit staat, stuur RGB = (0,0,0)
-    if (!ui->checkBoxLightOn->isChecked()) {
-        applyLightColor(0, 0, 0);
-        return;
+    int r = 0, g = 0, b = 0;
+
+    if (ui->checkBoxLightOn->isChecked()) {
+        r = ui->sliderR->value();
+        g = ui->sliderG->value();
+        b = ui->sliderB->value();
     }
 
-    // Lees de sliderwaarden uit
-    int r = ui->sliderR->value();
-    int g = ui->sliderG->value();
-    int b = ui->sliderB->value();
-
-    // Pas de kleur toe via een aparte functie
+    // Pas de kleur toe in de GUI
     applyLightColor(r, g, b);
+
+    // Bouw het sensor_packet voor RGB
+    sensor_packet pakket;
+    pakket.header.ptype = PacketType::DATA;
+    pakket.header.length = sizeof(sensor_header) + sizeof(sensor_packet_rgb_light);
+
+    pakket.data.rgb_light.metadata.sensor_type = SensorType::LIGHT;
+    pakket.data.rgb_light.metadata.sensor_id = 1;
+
+    pakket.data.rgb_light.red_state = static_cast<uint8_t>(r);
+    pakket.data.rgb_light.green_state = static_cast<uint8_t>(g);
+    pakket.data.rgb_light.blue_state = static_cast<uint8_t>(b);
+
+    // Zet om naar QByteArray
+    QByteArray data(reinterpret_cast<const char*>(&pakket), pakket.header.length);
+
+    // Verzend via dummy functie
+    verzendPakket(data);
+}
+
+// TCP
+void MainWindow::verzendPakket(const QByteArray& data) {
+    qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
+    qDebug() << data.toHex(' ');
 }
 
 // Deze functie simuleert het toepassen van de RGB kleur
 void MainWindow::applyLightColor(int r, int g, int b) {
-    // Voor nu: toon in de debug output
     qDebug() << "RGB ingesteld op R:" << r << " G:" << g << " B:" << b;
 }
 
 // Wordt uitgevoerd als je op 'Publiceer Menu' klikt
 void MainWindow::on_btnPublishMenu_clicked() {
-    // Haal tekst uit de QTextEdit en toon in het menu-label
     QString menu = ui->textEditMenuInput->toPlainText();
     ui->labelCurrentMenu->setText(menu);
 }
@@ -77,7 +101,6 @@ void MainWindow::on_btnVentilatorUit_clicked() {
 void MainWindow::on_btnTafelToggle_clicked() {
     QString current = ui->labelTafelStatus->text();
 
-    // Check huidige status en wissel
     if (current.contains("UIT")) {
         ui->labelTafelStatus->setText("Tafel staat AAN");
     } else {
