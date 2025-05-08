@@ -68,7 +68,7 @@ void MainWindow::on_btnSetColor_clicked() {
     verzendPakket(data);
 }
 
-// Dummy functie – jouw team koppelt hier hun TCP-verzendcode aan
+//TCP
 void MainWindow::verzendPakket(const QByteArray& data) {
     qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
     qDebug() << data.toHex(' ');
