@@ -51,10 +51,10 @@ void MainWindow::on_btnSetColor_clicked() {
 
     // Bouw het sensor_packet voor RGB
     sensor_packet pakket;
-    pakket.header.ptype = PacketType::DATA;
+    pakket.header.ptype = PacketType::DASHBOARD_POST;
     pakket.header.length = sizeof(sensor_header) + sizeof(sensor_packet_rgb_light);
 
-    pakket.data.rgb_light.metadata.sensor_type = SensorType::LIGHT;
+    pakket.data.rgb_light.metadata.sensor_type = SensorType::RGB_LIGHT;
     pakket.data.rgb_light.metadata.sensor_id = 1;
 
     pakket.data.rgb_light.red_state = static_cast<uint8_t>(r);
@@ -68,7 +68,7 @@ void MainWindow::on_btnSetColor_clicked() {
     verzendPakket(data);
 }
 
-// TCP
+//TCP
 void MainWindow::verzendPakket(const QByteArray& data) {
     qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
     qDebug() << data.toHex(' ');
