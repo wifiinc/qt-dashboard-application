@@ -18,6 +18,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sliderR->setRange(0, 255);
     ui->sliderG->setRange(0, 255);
     ui->sliderB->setRange(0, 255);
+
+    // Dummy sensorwaarden tonen op LCD displays
+    ui->lcdTemp->display(21.3);
+    ui->lcdCO2->display(580);
+    ui->lcdHumidity->display(42);
+
+    // Initieel menu en statuslabels instellen
+    ui->labelCurrentMenu->setText("-");
+    ui->labelVentilatorStatus->setText("Uit");
+    ui->labelLichtkrant->setText("Welkom");
+    ui->labelTafelStatus->setText("Tafel staat UIT");
 }
 
 // Destructor: zorgt ervoor dat geheugen van de UI wordt opgeruimd
@@ -40,10 +51,10 @@ void MainWindow::on_btnSetColor_clicked() {
 
     // Bouw het sensor_packet voor RGB
     sensor_packet pakket;
-    pakket.header.ptype = PacketType::DATA;
+    pakket.header.ptype = PacketType::DASHBOARD_POST;
     pakket.header.length = sizeof(sensor_header) + sizeof(sensor_packet_rgb_light);
 
-    pakket.data.rgb_light.metadata.sensor_type = SensorType::LIGHT;
+    pakket.data.rgb_light.metadata.sensor_type = SensorType::RGB_LIGHT;
     pakket.data.rgb_light.metadata.sensor_id = 1;
 
     pakket.data.rgb_light.red_state = static_cast<uint8_t>(r);
@@ -57,7 +68,7 @@ void MainWindow::on_btnSetColor_clicked() {
     verzendPakket(data);
 }
 
-// TCP
+// Dummy functie – jouw team koppelt hier hun TCP-verzendcode aan
 void MainWindow::verzendPakket(const QByteArray& data) {
     qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
     qDebug() << data.toHex(' ');
@@ -66,4 +77,39 @@ void MainWindow::verzendPakket(const QByteArray& data) {
 // Deze functie simuleert het toepassen van de RGB kleur
 void MainWindow::applyLightColor(int r, int g, int b) {
     qDebug() << "RGB ingesteld op R:" << r << " G:" << g << " B:" << b;
+}
+
+// Wordt uitgevoerd als je op 'Publiceer Menu' klikt
+void MainWindow::on_btnPublishMenu_clicked() {
+    QString menu = ui->textEditMenuInput->toPlainText();
+    ui->labelCurrentMenu->setText(menu);
+}
+
+// Knop om ventilator AAN te zetten
+void MainWindow::on_btnVentilatorAan_clicked() {
+    ui->labelVentilatorStatus->setText("Aan");
+    qDebug() << "Ventilator aan";
+}
+
+// Knop om ventilator UIT te zetten
+void MainWindow::on_btnVentilatorUit_clicked() {
+    ui->labelVentilatorStatus->setText("Uit");
+    qDebug() << "Ventilator uit";
+}
+
+// Zet een tafelstatus aan/uit (toggle)
+void MainWindow::on_btnTafelToggle_clicked() {
+    QString current = ui->labelTafelStatus->text();
+
+    if (current.contains("UIT")) {
+        ui->labelTafelStatus->setText("Tafel staat AAN");
+    } else {
+        ui->labelTafelStatus->setText("Tafel staat UIT");
+    }
+}
+
+// Update tekst van de lichtkrant
+void MainWindow::on_btnUpdateLichtkrant_clicked() {
+    QString tekst = ui->lineEditLichtkrant->text();
+    ui->labelLichtkrant->setText(tekst);
 }
