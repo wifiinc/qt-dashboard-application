@@ -8,18 +8,12 @@ MainWindow::MainWindow(QWidget *parent)
     , client("192.168.0.100", 8080)  // IP of Raspberry Pi
 {
     ui->setupUi(this);
+
+    sensor_packet packet;
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::on_onButton_clicked() {
-    QString res = client.sendCommand("ON");
-    ui->statusLabel->setText("Light is: " + res);
-}
 
-void MainWindow::on_offButton_clicked() {
-    QString res = client.sendCommand("OFF");
-    ui->statusLabel->setText("Light is: " + res);
-}
