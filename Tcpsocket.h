@@ -1,16 +1,16 @@
-#ifndef LIGHTCLIENT_H
-#define LIGHTCLIENT_H
+#ifndef TCPSOCKET_H
+#define TCPSOCKET_H
 
 #include <QString>
 
-class LightClient {
+class Tcpsocket {
 public:
-    LightClient(const QString &host, int port);
-    QString sendCommand(const QString &cmd); // "ON" or "OFF"
+    Tcpsocket(const QString &host, int port);
+    QString verzendPakket(const QString &cmd); // "ON" or "OFF"
 
 private:
     QString serverHost;
     int serverPort;
 };
 
-#endif // LIGHTCLIENT_H
+#endif // TCPSOCKET_H

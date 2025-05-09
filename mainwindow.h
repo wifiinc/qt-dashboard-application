@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "LightClient.h"
+#include "Tcpsocket.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,7 +21,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    LightClient client;
+    Tcpsocket client;
 };
 
 #endif // MAINWINDOW_H

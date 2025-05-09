@@ -19,16 +19,18 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        LightClient.cpp
-        LightClient.h
+        Tcpsocket.cpp
+        Tcpsocket.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(dashboard
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        LightClient.cpp
-        LightClient.h
+        Tcpsocket.cpp
+        Tcpsocket.h
+        packets.h
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET dashboard APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

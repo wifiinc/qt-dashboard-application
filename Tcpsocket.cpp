@@ -1,11 +1,11 @@
-#include "LightClient.h"
+#include "Tcpsocket.h"
 #include <QTcpSocket>
 
 
-LightClient::LightClient(const QString &host, int port)
+Tcpsocket::Tcpsocket(const QString &host, int port)
     : serverHost(host), serverPort(port) {}
 
-QString LightClient::sendCommand(const QString &cmd) {
+QString Tcpsocket::verzendPakket(const QString &cmd) {
     QTcpSocket socket;
     socket.connectToHost(serverHost, serverPort);
     if (!socket.waitForConnected(1000)) return "Failed to connect";
