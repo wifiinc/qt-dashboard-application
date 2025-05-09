@@ -1,6 +1,7 @@
 #include "LightClient.h"
 #include <QTcpSocket>
 
+
 LightClient::LightClient(const QString &host, int port)
     : serverHost(host), serverPort(port) {}
 
@@ -15,4 +16,6 @@ QString LightClient::sendCommand(const QString &cmd) {
     QString response = socket.readAll();
     socket.disconnectFromHost();
     return response;
+    //packet.h sturct aan maken
+    // verstuurt een pointer wijsten naar de sturct
 }
