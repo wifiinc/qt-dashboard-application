@@ -12,16 +12,19 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    //Toegevoegd: declaratie van verzendPakket
+    void verzendPakket(const QByteArray& data);
+
 private slots:
-    void on_onButton_clicked();
-    void on_offButton_clicked();
+    void on_btnSetColor_clicked();
 
 private:
     Ui::MainWindow *ui;
     Tcpsocket client;
+    void applyLightColor(int r, int g, int b);
 };
 
 #endif // MAINWINDOW_H

@@ -2,41 +2,20 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>320</width>
-    <height>240</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>QT Light Controller</string>
-  </property>
+  <property name="geometry"><rect><x>0</x><y>0</y><width>800</width><height>600</height></rect></property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="mainLayout">
+    <!-- RGB Verlichting -->
     <item>
-     <widget class="QPushButton" name="onButton">
-      <property name="text">
-       <string>Light ON</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="offButton">
-      <property name="text">
-       <string>Light OFF</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="statusLabel">
-      <property name="text">
-       <string>Status: Unknown</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
+     <widget class="QGroupBox" name="groupBoxRGB">
+      <property name="title"><string>RGB Verlichting</string></property>
+      <layout class="QVBoxLayout" name="layoutRGB">
+       <item><widget class="QCheckBox" name="checkBoxLightOn"><property name="text"><string>Lamp aan</string></property></widget></item>
+       <item><widget class="QSlider" name="sliderR"><property name="maximum"><number>255</number></property><property name="orientation"><enum>Qt::Horizontal</enum></property></widget></item>
+       <item><widget class="QSlider" name="sliderG"><property name="maximum"><number>255</number></property><property name="orientation"><enum>Qt::Horizontal</enum></property></widget></item>
+       <item><widget class="QSlider" name="sliderB"><property name="maximum"><number>255</number></property><property name="orientation"><enum>Qt::Horizontal</enum></property></widget></item>
+       <item><widget class="QPushButton" name="btnSetColor"><property name="text"><string>Stel kleur in</string></property></widget></item>
+      </layout>
      </widget>
     </item>
    </layout>
