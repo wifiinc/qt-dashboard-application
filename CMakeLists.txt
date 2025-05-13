@@ -74,7 +74,6 @@ set_target_properties(dashboard PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-
 include(GNUInstallDirs)
 install(TARGETS dashboard
     BUNDLE DESTINATION .
