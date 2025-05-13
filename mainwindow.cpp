@@ -58,7 +58,7 @@ void MainWindow::verzendPakket(const QByteArray& data)
     qDebug() << data.toHex(' ');
 
 
-    qDebug() << "Target IP (bridge):" << bridgeIp;
+    qDebug() << "Target IP (bridge):" << bridgeIp << ":" << bridgePort;
 }
 
 void MainWindow::applyLightColor(int r, int g, int b)
