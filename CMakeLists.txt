@@ -52,12 +52,7 @@ else()
     endif()
 endif()
 
-
-
-target_link_libraries(dashboard
-    PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
-)
+target_link_libraries(dashboard PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(dashboard PRIVATE Qt6::Network)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
