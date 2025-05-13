@@ -6,11 +6,11 @@ SettingsWindow::SettingsWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Sensor ID instellen
+
     ui->spinBoxRgbSensorId->setRange(1, 255);
     ui->spinBoxRgbSensorId->setValue(1);
 
-    // Optioneel: standaard IP (optioneel aanpasbaar)
+
     ui->lineEditBridgeIp->setText("192.168.1.100");
 }
 

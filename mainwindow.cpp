@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     settingsWindow = new SettingsWindow(this);
     connect(settingsWindow, &SettingsWindow::rgbSensorIdChanged, this, &MainWindow::updateRgbSensorId);
-    connect(settingsWindow, &SettingsWindow::bridgeIpChanged, this, &MainWindow::updateBridgeIp);  // Nieuw
+    connect(settingsWindow, &SettingsWindow::bridgeIpChanged, this, &MainWindow::updateBridgeIp);
 }
 
 MainWindow::~MainWindow()
@@ -56,7 +56,7 @@ void MainWindow::verzendPakket(const QByteArray& data)
     qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
     qDebug() << data.toHex(' ');
 
-    // Later kun je hier bridgeIp gebruiken voor socketcommunicatie
+
     qDebug() << "Target IP (bridge):" << bridgeIp;
 }
 

@@ -22,12 +22,12 @@ private slots:
     void on_btnSetColor_clicked();
     void on_btnOpenSettings_clicked();
     void updateRgbSensorId(int newID);
-    void updateBridgeIp(const QString& newIp);  // Nieuw
+    void updateBridgeIp(const QString& newIp);
 
 private:
     Ui::MainWindow *ui;
     int rgbSensorId = 1;
-    QString bridgeIp = "192.168.1.100";         // Nieuw: default IP
+    QString bridgeIp = "192.168.1.100";
     SettingsWindow* settingsWindow;
 
     void applyLightColor(int r, int g, int b);
