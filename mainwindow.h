@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "Tcpsocket.h"
+#include "Tcpserverhandler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,12 +17,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_onButton_clicked();
-    void on_offButton_clicked();
+    int serverluisteren();
 
 private:
     Ui::MainWindow *ui;
     Tcpsocket client;
+    TcpServerHandler Server;
 };
 
 #endif // MAINWINDOW_H
