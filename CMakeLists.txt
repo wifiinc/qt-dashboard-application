@@ -21,7 +21,6 @@ set(PROJECT_SOURCES
         Tcpsocket.cpp
         Tcpsocket.h
         packets.h
-
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
