@@ -26,7 +26,6 @@ void SettingsWindow::on_btnSave_clicked()
     int newPort = ui->spinBoxBridgePort->value();
 
     emit rgbSensorIdChanged(newSensorId);
-    emit bridgeIpChanged(newIp);
-    emit bridgePortChanged(newPort);
+    emit bridgeIpChanged(newIp, newPort);
     close();
 }

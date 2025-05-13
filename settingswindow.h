@@ -17,8 +17,7 @@ public:
 
 signals:
     void rgbSensorIdChanged(int newID);
-    void bridgeIpChanged(const QString& newIp);  // Nieuw signaal voor IP
-    void bridgePortChanged(int newPort);
+    void bridgeIpChanged(const QString& newIp, int newPort);  // Nieuw signaal voor IP
 
 private slots:
     void on_btnSave_clicked();

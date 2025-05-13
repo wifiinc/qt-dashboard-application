@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(settingsWindow, &SettingsWindow::rgbSensorIdChanged, this, &MainWindow::updateRgbSensorId);
     connect(settingsWindow, &SettingsWindow::bridgeIpChanged, this, &MainWindow::updateBridgeIp);
-    connect(settingsWindow, &SettingsWindow::bridgePortChanged, this, &MainWindow::updateBridgePort);
 }
 
 MainWindow::~MainWindow()
@@ -78,15 +77,10 @@ void MainWindow::updateRgbSensorId(int newID)
     rgbSensorId = newID;
 }
 
-void MainWindow::updateBridgeIp(const QString& newIp)
+void MainWindow::updateBridgeIp(const QString& newIp, int newPort)
 {
     bridgeIp = newIp;
-    qDebug() << "Bridge IP aangepast naar:" << bridgeIp;
-}
-
-
-void MainWindow::updateBridgePort(int newPort)
-{
     bridgePort = newPort;
+    qDebug() << "Bridge IP aangepast naar:" << bridgeIp;
     qDebug() << "Bridge Port aangepast naar:" << bridgePort;
 }

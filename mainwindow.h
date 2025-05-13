@@ -22,8 +22,7 @@ private slots:
     void on_btnSetColor_clicked();
     void on_btnOpenSettings_clicked();
     void updateRgbSensorId(int newID);
-    void updateBridgeIp(const QString& newIp);
-    void updateBridgePort(int newPort);
+    void updateBridgeIp(const QString& newIp, int newPort);
 
 private:
     Ui::MainWindow *ui;
