@@ -23,8 +23,10 @@ void SettingsWindow::on_btnSave_clicked()
 {
     int newSensorId = ui->spinBoxRgbSensorId->value();
     QString newIp = ui->lineEditBridgeIp->text();
+    int newPort = ui->spinBoxBridgePort->value();
 
     emit rgbSensorIdChanged(newSensorId);
     emit bridgeIpChanged(newIp);
+    emit bridgePortChanged(newPort);
     close();
 }
