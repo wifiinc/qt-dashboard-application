@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sliderB->setRange(0, 255);
 
     settingsWindow = new SettingsWindow(this);
-    connect(settingsWindow, &SettingsWindow::sensorIDChanged, this, &MainWindow::updateSensorId);
+    connect(settingsWindow, &SettingsWindow::rgbSensorIdChanged, this, &MainWindow::updateRgbSensorId);
+    connect(settingsWindow, &SettingsWindow::bridgeIpChanged, this, &MainWindow::updateBridgeIp);  // Nieuw
 }
 
 MainWindow::~MainWindow()
@@ -41,7 +42,7 @@ void MainWindow::on_btnSetColor_clicked()
     pakket.header.length = sizeof(sensor_header) + sizeof(sensor_packet_rgb_light);
 
     pakket.data.rgb_light.metadata.sensor_type = SensorType::RGB_LIGHT;
-    pakket.data.rgb_light.metadata.sensor_id = static_cast<uint8_t>(sensorId);
+    pakket.data.rgb_light.metadata.sensor_id = static_cast<uint8_t>(rgbSensorId);
     pakket.data.rgb_light.red_state = static_cast<uint8_t>(r);
     pakket.data.rgb_light.green_state = static_cast<uint8_t>(g);
     pakket.data.rgb_light.blue_state = static_cast<uint8_t>(b);
@@ -54,6 +55,9 @@ void MainWindow::verzendPakket(const QByteArray& data)
 {
     qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
     qDebug() << data.toHex(' ');
+
+    // Later kun je hier bridgeIp gebruiken voor socketcommunicatie
+    qDebug() << "Target IP (bridge):" << bridgeIp;
 }
 
 void MainWindow::applyLightColor(int r, int g, int b)
@@ -66,8 +70,14 @@ void MainWindow::on_btnOpenSettings_clicked()
     settingsWindow->show();
 }
 
-void MainWindow::updateSensorId(int newID)
+void MainWindow::updateRgbSensorId(int newID)
 {
     qDebug() << "Sensor ID aangepast naar:" << newID;
-    sensorId = newID;
+    rgbSensorId = newID;
+}
+
+void MainWindow::updateBridgeIp(const QString& newIp)
+{
+    bridgeIp = newIp;
+    qDebug() << "Bridge IP aangepast naar:" << bridgeIp;
 }

@@ -16,7 +16,8 @@ public:
     ~SettingsWindow();
 
 signals:
-    void sensorIDChanged(int newID);
+    void rgbSensorIdChanged(int newID);
+    void bridgeIpChanged(const QString& newIp);  // Nieuw signaal voor IP
 
 private slots:
     void on_btnSave_clicked();
