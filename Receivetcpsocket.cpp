@@ -42,7 +42,7 @@ void Receivetcpsocket::onReadyRead(){
 
     while(true){
         //Hebben we minstens genoeg voor de header?
-        if(buffer.size() <static_cast<int>(sizeof(sensor_header))){
+        if(buffer.size() < static_cast<int>(sizeof(sensor_header))){
             return;
         }
 
@@ -53,6 +53,7 @@ void Receivetcpsocket::onReadyRead(){
 
         //hebben we al genoeg voor het hele pakket?
         if(buffer.size() < expectedSize){
+            qDebug() << "Onvolledige packet.";
             return;
         }
 
