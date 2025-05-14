@@ -57,7 +57,6 @@ void MainWindow::verzendPakket(const QByteArray& data)
     qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
     qDebug() << data.toHex(' ');
 
-
     qDebug() << "Target IP (bridge):" << bridgeIp << ":" << bridgePort;
 }
 
@@ -68,6 +67,9 @@ void MainWindow::applyLightColor(int r, int g, int b)
 
 void MainWindow::on_btnOpenSettings_clicked()
 {
+    settingsWindow->setRgbSensorId(rgbSensorId);
+    settingsWindow->setBridgeIp(bridgeIp);
+    settingsWindow->setBridgePort(bridgePort);
     settingsWindow->show();
 }
 

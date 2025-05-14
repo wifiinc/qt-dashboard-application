@@ -15,9 +15,13 @@ public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
 
+    void setRgbSensorId(int id);
+    void setBridgeIp(const QString& ip);
+    void setBridgePort(int port);
+
 signals:
     void rgbSensorIdChanged(int newID);
-    void bridgeIpChanged(const QString& newIp, int newPort);  // Nieuw signaal voor IP
+    void bridgeIpChanged(const QString& newIp, int newPort);
 
 private slots:
     void on_btnSave_clicked();
