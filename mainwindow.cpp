@@ -6,26 +6,21 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , client("192.168.0.100", 8080)// IP of Raspberry Pi
-    , Server(8080)
 {
     ui->setupUi(this);
 
     sensor_packet packet;
-    if(!Server.startListening()){
-
-    }
+    requestluisteren();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
-int MainWindow::serverluisteren(){
-    if(!Server.startListening()){
-        return -1;
-    }
-
-QObject:connect(&Server, &TcpServerHandler::packetReceived, [](const sensor_packet& packet){
-    qDebug() << "Verwerkt pakket van sensor ID" << packet.data.generic.metadata.sensor_id;
+void MainWindow::requestluisteren(){
+    request.connectToServer("127.0.0.1", 8080);
+    QObject::connect(&request, &Receivetcpsocket::packetReceived, [](const sensor_packet& packet) {
+        qDebug() << "Packet ontvangen van sensor ID:"
+                 << packet.data.generic.metadata.sensor_id;
     });
 }

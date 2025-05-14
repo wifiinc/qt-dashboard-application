@@ -17,12 +17,12 @@ public:
     ~MainWindow();
 
 private slots:
-    int serverluisteren();
+    void requestluisteren();
 
 private:
     Ui::MainWindow *ui;
     Tcpsocket client;
-    TcpServerHandler Server;
+    Receivetcpsocket request;
 };
 
 #endif // MAINWINDOW_H

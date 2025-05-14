@@ -77,7 +77,7 @@ void Receivetcpsocket::requestSensorPacket() {
     request.header.ptype = PacketType::DASHBOARD_GET;
     request.header.length = sizeof(sensor_packet_generic);
     request.data.generic.metadata.sensor_type = SensorType::TEMPERATURE;
-    request.data.generic.metadata.sensor_id = 1;
+    request.data.generic.metadata.sensor_id = 8;
 
     QByteArray data(reinterpret_cast<const char*>(&request), sizeof(sensor_header) + request.header.length);
     socket_->write(data);
