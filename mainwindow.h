@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "settingswindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,14 +16,20 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //Toegevoegd: declaratie van verzendPakket
     void verzendPakket(const QByteArray& data);
 
 private slots:
     void on_btnSetColor_clicked();
+    void on_btnOpenSettings_clicked();
+    void updateRgbSensorId(int newID);
+    void updateBridgeIp(const QString& newIp, int newPort);
 
 private:
     Ui::MainWindow *ui;
+    int rgbSensorId = 1;
+    QString bridgeIp = "10.0.0.2";
+    int bridgePort = 5000;
+    SettingsWindow* settingsWindow;
 
     void applyLightColor(int r, int g, int b);
 };
