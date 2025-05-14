@@ -30,8 +30,8 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::requestluisteren(){
-    request.connectToServer("127.0.0.1", 8080);
-    QObject::connect(&request, &Receivetcpsocket::packetReceived, [](const sensor_packet& packet) {
+    client.connectToServer();
+    QObject::connect(&client, &Tcpsocket::packetReceived, [](const sensor_packet& packet) {
         qDebug() << "Packet ontvangen van sensor ID:"
                  << packet.data.generic.metadata.sensor_id;
     });
@@ -64,12 +64,6 @@ void MainWindow::on_btnSetColor_clicked() {
 
     // Verzend Tcpsocket.h
     client.sendPacket(pakket);
-}
-
-// Simuleert het verzenden van het pakket
-void MainWindow::verzendPakket(const QByteArray& data) {
-    qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
-    qDebug() << data.toHex(' ');
 }
 
 // RGB kleur lokaal toepassen
