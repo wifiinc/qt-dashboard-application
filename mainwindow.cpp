@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(settingsWindow, &SettingsWindow::rgbSensorIdChanged, this, &MainWindow::updateRgbSensorId);
     connect(settingsWindow, &SettingsWindow::bridgeIpChanged, this, &MainWindow::updateBridgeIp);
+
 }
 
 MainWindow::~MainWindow()
@@ -66,14 +67,6 @@ void MainWindow::on_btnSetColor_clicked()
 
 }
 
-void MainWindow::verzendPakket(const QByteArray& data)
-{
-    qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
-    qDebug() << data.toHex(' ');
-
-    qDebug() << "Target IP (bridge):" << bridgeIp << ":" << bridgePort;
-}
-
 void MainWindow::applyLightColor(int r, int g, int b)
 {
     qDebug() << "RGB ingesteld op R:" << r << " G:" << g << " B:" << b;
@@ -97,6 +90,8 @@ void MainWindow::updateBridgeIp(const QString& newIp, int newPort)
 {
     bridgeIp = newIp;
     bridgePort = newPort;
+    client.updateConnection(newIp, newPort);
     qDebug() << "Bridge IP aangepast naar:" << bridgeIp;
     qDebug() << "Bridge Port aangepast naar:" << bridgePort;
 }
+

@@ -110,3 +110,10 @@ void Tcpsocket::requestSensorPacket() {
 
     qDebug() << "Sensor request verzonden.";
 }
+
+void Tcpsocket::updateConnection(const QString& newIp, int newPort) {
+    onDisconnected();
+    this-> socketHost = newIp;
+    this-> socketPort = newPort;
+    connectToServer();
+}

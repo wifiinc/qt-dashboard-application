@@ -17,6 +17,7 @@ public:
 
     bool connectToServer(); // Maakt connectie
     bool sendPacket(const sensor_packet& packet); // Kijkt of connectie is gelukt en verstuurd daarna de pointer
+    void updateConnection(const QString& newIp, int newPort);
 
 signals:
     void packetReceived(const sensor_packet& packet);
@@ -27,6 +28,7 @@ private slots:
     void onDisconnected();
     void onError(QAbstractSocket::SocketError socketError);
     void requestSensorPacket();
+
 
 private:
     QString socketHost;
