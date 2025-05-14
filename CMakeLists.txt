@@ -21,6 +21,10 @@ set(PROJECT_SOURCES
         mainwindow.ui
         Tcpsocket.cpp
         Tcpsocket.h
+        settingswindow.cpp
+        settingswindow.h
+        settingswindow.ui
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
