@@ -11,8 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(Qt6 REQUIRED COMPONENTS Network)
-
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -21,6 +20,7 @@ set(PROJECT_SOURCES
         mainwindow.ui
         Tcpsocket.cpp
         Tcpsocket.h
+        packets.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -30,9 +30,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Tcpsocket.cpp
         Tcpsocket.h
         packets.h
+<<<<<<< HEAD
         Receivetcpsocket.h
         Receivetcpsocket.cpp
 
+=======
+>>>>>>> refs/remotes/origin/koppelen_aan_de_server
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET dashboard APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -52,12 +55,7 @@ else()
     endif()
 endif()
 
-
-
-target_link_libraries(dashboard
-    PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
-)
+target_link_libraries(dashboard PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(dashboard PRIVATE Qt6::Network)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -73,7 +71,6 @@ set_target_properties(dashboard PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
-
 
 include(GNUInstallDirs)
 install(TARGETS dashboard
