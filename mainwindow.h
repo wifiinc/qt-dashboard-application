@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "Tcpsocket.h"
-#include "Tcpserverhandler.h"
+#include "Receivetcpsocket.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
