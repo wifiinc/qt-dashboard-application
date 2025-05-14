@@ -13,7 +13,6 @@ class Receivetcpsocket : public QObject{
     Q_OBJECT
 public:
     explicit Receivetcpsocket(QObject* parent = nullptr);
-    ~Receivetcpsocket();
     void connectToServer(const QString& host, quint16 port);
 
 signals:
