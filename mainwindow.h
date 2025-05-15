@@ -18,11 +18,15 @@ public:
 
 private slots:
     void requestluisteren();
-    void on_btnSetColor_clicked();
     void on_btnOpenSettings_clicked();
     void updateRgbSensorId(int newID);
     void updateBridgeIp(const QString& newIp, int newPort);
 
+
+    void on_changeRGBBtn_clicked();
+    void on_saveRGBBtn_clicked();
+
+    void on_checkBoxLightOn_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
@@ -32,7 +36,7 @@ private:
     int bridgePort = 5000;
     SettingsWindow* settingsWindow;
     void applyLightColor(int r, int g, int b);
-
+    QColor huidigekleurRGBLed = Qt::white;
 };
 
 #endif // MAINWINDOW_H
