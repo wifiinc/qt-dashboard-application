@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
 #include "Tcpsocket.h"
 #include "settingswindow.h"
 
@@ -17,6 +18,8 @@ public:
     ~MainWindow();
 
 private slots:
+    void writeSettings();
+    void loadSettings();
     void requestluisteren();
     void on_btnOpenSettings_clicked();
     void updateRgbSensorId(int newID);
@@ -31,11 +34,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Tcpsocket client;
-    int rgbSensorId = 1;
-    QString bridgeIp = "10.0.0.2";
-    int bridgePort = 5000;
     SettingsWindow* settingsWindow;
-    void applyLightColor(int r, int g, int b);
+
+    int rgbSensorId;
+    QString bridgeIp;
+    int bridgePort;
+
     QColor huidigekleurRGBLed = Qt::white;
 };
 
