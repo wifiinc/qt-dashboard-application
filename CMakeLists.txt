@@ -50,8 +50,6 @@ else()
     endif()
 endif()
 
-
-
 target_link_libraries(dashboard PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(dashboard PRIVATE Qt${QT_VERSION_MAJOR}::Network)
 
@@ -68,7 +66,6 @@ set_target_properties(dashboard PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
-
 
 include(GNUInstallDirs)
 install(TARGETS dashboard
