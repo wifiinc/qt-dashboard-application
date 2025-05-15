@@ -112,7 +112,7 @@ void Tcpsocket::requestSensorPacket() {
 }
 
 void Tcpsocket::updateConnection(const QString& newIp, int newPort) {
-    onDisconnected();
+    socket_->disconnect();
     this-> socketHost = newIp;
     this-> socketPort = newPort;
     connectToServer();
