@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QColorDialog>
 
 extern "C" {
 #include "packets.h"
@@ -10,9 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->sliderR->setRange(0, 255);
-    ui->sliderG->setRange(0, 255);
-    ui->sliderB->setRange(0, 255);
 
     settingsWindow = new SettingsWindow(this);
 
@@ -26,17 +24,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::on_btnOpenColorPicker_clicked()
+{
+    QColor gekozenKleur = QColorDialog::getColor(huidigeKleur, this, "Kies een kleur");
+
+    if (gekozenKleur.isValid()) {
+        huidigeKleur = gekozenKleur;
+        qDebug() << "Gekozen kleur:" << huidigeKleur;
+    }
+}
+
 void MainWindow::on_btnSetColor_clicked()
 {
-    int r = 0, g = 0, b = 0;
-
-    if (ui->checkBoxLightOn->isChecked()) {
-        r = ui->sliderR->value();
-        g = ui->sliderG->value();
-        b = ui->sliderB->value();
+    if (!ui->checkBoxLightOn->isChecked()) {
+        huidigeKleur = QColor(0, 0, 0); // Lamp uit
     }
 
-    applyLightColor(r, g, b);
+    applyLightColor(huidigeKleur.red(), huidigeKleur.green(), huidigeKleur.blue());
 
     sensor_packet pakket;
     pakket.header.ptype = PacketType::DASHBOARD_POST;
@@ -44,9 +48,9 @@ void MainWindow::on_btnSetColor_clicked()
 
     pakket.data.rgb_light.metadata.sensor_type = SensorType::RGB_LIGHT;
     pakket.data.rgb_light.metadata.sensor_id = static_cast<uint8_t>(rgbSensorId);
-    pakket.data.rgb_light.red_state = static_cast<uint8_t>(r);
-    pakket.data.rgb_light.green_state = static_cast<uint8_t>(g);
-    pakket.data.rgb_light.blue_state = static_cast<uint8_t>(b);
+    pakket.data.rgb_light.red_state = static_cast<uint8_t>(huidigeKleur.red());
+    pakket.data.rgb_light.green_state = static_cast<uint8_t>(huidigeKleur.green());
+    pakket.data.rgb_light.blue_state = static_cast<uint8_t>(huidigeKleur.blue());
 
     QByteArray data(reinterpret_cast<const char*>(&pakket), pakket.header.length);
     verzendPakket(data);
@@ -56,7 +60,6 @@ void MainWindow::verzendPakket(const QByteArray& data)
 {
     qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
     qDebug() << data.toHex(' ');
-
     qDebug() << "Target IP (bridge):" << bridgeIp << ":" << bridgePort;
 }
 

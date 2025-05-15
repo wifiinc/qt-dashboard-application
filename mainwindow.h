@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QColor>
 #include "settingswindow.h"
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +22,7 @@ public:
 private slots:
     void on_btnSetColor_clicked();
     void on_btnOpenSettings_clicked();
+    void on_btnOpenColorPicker_clicked();
     void updateRgbSensorId(int newID);
     void updateBridgeIp(const QString& newIp, int newPort);
 
@@ -30,7 +32,7 @@ private:
     QString bridgeIp = "10.0.0.2";
     int bridgePort = 5000;
     SettingsWindow* settingsWindow;
-
+    QColor huidigeKleur = Qt::white;
     void applyLightColor(int r, int g, int b);
 };
 
