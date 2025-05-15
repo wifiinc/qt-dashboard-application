@@ -19,13 +19,11 @@ Tcpsocket::~Tcpsocket()
     socket_->deleteLater();
 }
 
-
 bool Tcpsocket::connectToServer()
 {
     socket_->connectToHost(socketHost,socketPort);
     return socket_->waitForConnected(3000);
 }
-
 
 bool Tcpsocket::sendPacket(const sensor_packet& packet) {
     if (socket_->state() != QAbstractSocket::ConnectedState) {
@@ -113,7 +111,7 @@ void Tcpsocket::requestSensorPacket() {
 
 void Tcpsocket::updateConnection(const QString& newIp, int newPort) {
     socket_->disconnect();
-    this-> socketHost = newIp;
-    this-> socketPort = newPort;
+    this->socketHost = newIp;
+    this->socketPort = newPort;
     connectToServer();
 }
