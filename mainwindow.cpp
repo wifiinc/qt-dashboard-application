@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include <QDebug>
 #include <QColorDialog>
+#include <QSettings>
 
 extern "C" {
 #include "packets.h"
@@ -11,6 +12,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     : QMainWindow(parent), ui(new Ui::MainWindow), client("127.0.0.1", 5000)
 {
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LBAutomatisatie", "DashboardApp");
+
+    qDebug() << settings.fileName();
+
+    loadSettings();
+    writeSettings();
+
     ui->setupUi(this);
 
     requestluisteren();
@@ -31,6 +39,35 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::writeSettings()
+{
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LBAutomatisatie", "DashboardApp");
+
+    settings.beginGroup("Connection");
+    settings.setValue("bridgeIp", bridgeIp);
+    settings.setValue("bridgePort", bridgePort);
+    settings.endGroup();
+
+    settings.beginGroup("Sensors");
+    settings.setValue("rgbSensorId", rgbSensorId);
+    settings.endGroup();
+}
+
+void MainWindow::loadSettings()
+{
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LBAutomatisatie", "DashboardApp");
+
+    settings.beginGroup("Connection");
+    bridgeIp = settings.value("bridgeIp", "127.0.0.1").toString();
+    bridgePort = settings.value("bridgePort", 5000).toInt();
+    settings.endGroup();
+
+    settings.beginGroup("Sensors");
+    rgbSensorId = settings.value("rgbSensorId", 1).toInt();
+    settings.endGroup();
+}
+
 void MainWindow::requestluisteren(){
     client.connectToServer();
     QObject::connect(&client, &Tcpsocket::packetReceived, [](const sensor_packet& packet) {
@@ -44,6 +81,7 @@ void MainWindow::on_btnOpenSettings_clicked()
     settingsWindow->setRgbSensorId(rgbSensorId);
     settingsWindow->setBridgeIp(bridgeIp);
     settingsWindow->setBridgePort(bridgePort);
+
     settingsWindow->show();
 }
 
@@ -51,15 +89,20 @@ void MainWindow::updateRgbSensorId(int newID)
 {
     qDebug() << "Sensor ID aangepast naar:" << newID;
     rgbSensorId = newID;
+
+    writeSettings();
 }
 
 void MainWindow::updateBridgeIp(const QString& newIp, int newPort)
 {
     bridgeIp = newIp;
     bridgePort = newPort;
+
     client.updateConnection(newIp, newPort);
     qDebug() << "Bridge IP aangepast naar:" << bridgeIp;
     qDebug() << "Bridge Port aangepast naar:" << bridgePort;
+
+    writeSettings();
 }
 
 
