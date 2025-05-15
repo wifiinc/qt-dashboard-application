@@ -118,6 +118,69 @@
      </widget>
     </item>
     <item>
+     <widget class="QGroupBox" name="groupBoxTafel">
+      <property name="title">
+       <string>Tafelstatus</string>
+      </property>
+      <layout class="QHBoxLayout" name="layoutTafel">
+       <item>
+        <layout class="QVBoxLayout" name="tafel1">
+         <item alignment="Qt::AlignmentFlag::AlignHCenter">
+          <widget class="QLabel" name="tafel1Status">
+           <property name="text">
+            <string>Tafel staat UIT</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="tafel1Toggle">
+           <property name="text">
+            <string>Toggle tafel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="tafel2">
+         <item alignment="Qt::AlignmentFlag::AlignHCenter">
+          <widget class="QLabel" name="tafel2Status">
+           <property name="text">
+            <string>Tafel staat UIT</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="tafel2Toggle">
+           <property name="text">
+            <string>Toggle tafel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="tafel3">
+         <item alignment="Qt::AlignmentFlag::AlignHCenter">
+          <widget class="QLabel" name="tafel3Status">
+           <property name="text">
+            <string>Tafel staat UIT</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="tafel3Toggle">
+           <property name="text">
+            <string>Toggle tafel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="btnOpenSettings">
       <property name="text">
        <string>Instellingen</string>
