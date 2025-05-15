@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "./ui_mainwindow.h"
 #include <QDebug>
 
 extern "C" {
@@ -7,17 +7,22 @@ extern "C" {
 }
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+
+    : QMainWindow(parent), ui(new Ui::MainWindow), client("192.168.0.100", 8080)
 {
     ui->setupUi(this);
     ui->sliderR->setRange(0, 255);
     ui->sliderG->setRange(0, 255);
     ui->sliderB->setRange(0, 255);
 
+    requestluisteren();
+
+
     settingsWindow = new SettingsWindow(this);
 
     connect(settingsWindow, &SettingsWindow::rgbSensorIdChanged, this, &MainWindow::updateRgbSensorId);
     connect(settingsWindow, &SettingsWindow::bridgeIpChanged, this, &MainWindow::updateBridgeIp);
+
 }
 
 MainWindow::~MainWindow()
@@ -26,6 +31,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::requestluisteren(){
+    client.connectToServer();
+    QObject::connect(&client, &Tcpsocket::packetReceived, [](const sensor_packet& packet) {
+        qDebug() << "Packet ontvangen van sensor ID:"
+                 << packet.data.generic.metadata.sensor_id;
+    });
+}
+
+// Wordt uitgevoerd als op 'Stel kleur in' wordt geklikt
 void MainWindow::on_btnSetColor_clicked()
 {
     int r = 0, g = 0, b = 0;
@@ -48,16 +62,9 @@ void MainWindow::on_btnSetColor_clicked()
     pakket.data.rgb_light.green_state = static_cast<uint8_t>(g);
     pakket.data.rgb_light.blue_state = static_cast<uint8_t>(b);
 
-    QByteArray data(reinterpret_cast<const char*>(&pakket), pakket.header.length);
-    verzendPakket(data);
-}
+    // Verzend Tcpsocket.h
+    client.sendPacket(pakket);
 
-void MainWindow::verzendPakket(const QByteArray& data)
-{
-    qDebug() << "Pakket verzonden (" << data.size() << " bytes):";
-    qDebug() << data.toHex(' ');
-
-    qDebug() << "Target IP (bridge):" << bridgeIp << ":" << bridgePort;
 }
 
 void MainWindow::applyLightColor(int r, int g, int b)
@@ -83,6 +90,8 @@ void MainWindow::updateBridgeIp(const QString& newIp, int newPort)
 {
     bridgeIp = newIp;
     bridgePort = newPort;
+    client.updateConnection(newIp, newPort);
     qDebug() << "Bridge IP aangepast naar:" << bridgeIp;
     qDebug() << "Bridge Port aangepast naar:" << bridgePort;
 }
+
