@@ -92,6 +92,9 @@ void MainWindow::writeSettings() {
 
   settings.beginGroup("Sensors");
   settings.setValue("rgbSensorId", rgbSensorId);
+  settings.setValue("tafel1SensorId", tafel1SensorId);
+  settings.setValue("tafel2SensorId", tafel2SensorId);
+  settings.setValue("tafel3SensorId", tafel3SensorId);
   settings.endGroup();
 }
 
@@ -106,6 +109,9 @@ void MainWindow::loadSettings() {
 
   settings.beginGroup("Sensors");
   rgbSensorId = settings.value("rgbSensorId", 1).toInt();
+  tafel1SensorId = settings.value("tafel1SensorId", 1).toInt();
+  tafel2SensorId = settings.value("tafel2SensorId", 1).toInt();
+  tafel3SensorId = settings.value("tafel3SensorId", 1).toInt();
   settings.endGroup();
 }
 
@@ -155,6 +161,8 @@ void MainWindow::on_btnOpenSettings_clicked() {
 
   settingsWindow->setBridgeIp(bridgeIp);
   settingsWindow->setBridgePort(bridgePort);
+  settingsWindow->setTafelSensorId(tafel1SensorId, tafel2SensorId,
+                                   tafel3SensorId);
 
   settingsWindow->show();
 }
@@ -197,6 +205,8 @@ void MainWindow::updateTafelSensorId(int tafel1, int tafel2, int tafel3) {
       {SensorType::LIGHT, tafel2SensorId},
       {SensorType::LIGHT, tafel3SensorId},
   });
+
+  writeSettings();
 }
 
 void MainWindow::on_changeRGBBtn_clicked() {

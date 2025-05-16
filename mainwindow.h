@@ -45,13 +45,13 @@ class MainWindow : public QMainWindow {
   int rgbSensorId;
   QString bridgeIp;
   int bridgePort;
+  int tafel1SensorId;
+  int tafel2SensorId;
+  int tafel3SensorId;
 
   QColor huidigekleurRGBLed = Qt::white;
-  int tafel1SensorId = 2;
   bool tafel1State = false;
-  int tafel2SensorId = 1;
   bool tafel2State = false;
-  int tafel3SensorId = 2;
   bool tafel3State = false;
 };
 
