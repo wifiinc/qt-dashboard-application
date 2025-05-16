@@ -30,13 +30,13 @@ bool Tcpsocket::sendPacket(const sensor_packet& packet) {
         qDebug() << "Socket is not connected. Cannot send packet." << socketHost << ":" << socketPort;
         return false;
     }
+
     int totalSize = sizeof(sensor_header) + packet.header.length;
     QByteArray buffer(reinterpret_cast<const char*>(&packet), totalSize);
 
     qint64 bytesWritten = socket_->write(buffer);
     socket_->flush();
     return socket_->waitForBytesWritten() && bytesWritten == totalSize;
-
 }
 
 void Tcpsocket::onConnected() {
@@ -65,27 +65,33 @@ void Tcpsocket::onReadyRead(){
 
     while(true){
         //Hebben we minstens genoeg voor de header?
-        if(buffer.size() <static_cast<int>(sizeof(sensor_header))){
+        if(buffer.size() < static_cast<int>(sizeof(sensor_header))){
             return;
         }
 
         //lees header
         sensor_header header;
         std::memcpy(&header, buffer.constData(), sizeof(sensor_header));
-        int expectedSize = sizeof(sensor_header) + header.length;
+        int fullPacketSize = sizeof(sensor_header) + header.length;
+
+        if (header.ptype != PacketType::DASHBOARD_RESPONSE) {
+            continue; // We only process DASHBOARD_RESPONSE packets;
+        }
+
+        qDebug() << "Dashboard response ontvangen.";
 
         //hebben we al genoeg voor het hele pakket?
-        if(buffer.size() < expectedSize){
+        if(buffer.size() < fullPacketSize){
             return;
         }
 
         //hebben we een volledig pakket
-        QByteArray packetData = buffer.left(expectedSize);
-        buffer.remove(0, expectedSize);
+        QByteArray packetData = buffer.mid(0, fullPacketSize);
+        buffer.remove(0, fullPacketSize);
 
         //zet om naar struct
         sensor_packet packet;
-        std::memcpy(&packet, packetData.constData(), expectedSize);
+        std::memcpy(&packet, packetData.constData(), fullPacketSize);
 
         // emit signaal naar rest
         emit packetReceived(packet);
@@ -93,17 +99,30 @@ void Tcpsocket::onReadyRead(){
     }
 }
 
+void Tcpsocket::setSensorList(const std::vector<std::pair<SensorType, int>>& sensorList)
+{
+    sensorList_ = sensorList;
+}
+
 void Tcpsocket::requestSensorPacket() {
-    if (!socket_->isOpen()) return;
+    if (socket_->state() != QAbstractSocket::ConnectedState) {
+        qDebug() << "Socket is not connected. Cannot send request.";
+        return;
+    }
 
-    sensor_packet request;
-    request.header.ptype = PacketType::DASHBOARD_GET;
-    request.header.length = sizeof(sensor_packet_generic);
-    request.data.generic.metadata.sensor_type = SensorType::TEMPERATURE;
-    request.data.generic.metadata.sensor_id = 8;
+    for (const auto& sensor : sensorList_) {
+        sensor_packet request;
+        request.header.ptype = PacketType::DASHBOARD_GET;
+        request.header.length = sizeof(sensor_packet_generic);
+        request.data.generic.metadata.sensor_type = static_cast<SensorType>(sensor.first);
+        request.data.generic.metadata.sensor_id = static_cast<uint8_t>(sensor.second);
 
-    QByteArray data(reinterpret_cast<const char*>(&request), sizeof(sensor_header) + request.header.length);
-    socket_->write(data);
+        qDebug() << "Verzoek verzonden voor sensor type:" << static_cast<int>(sensor.first) << "ID:" << sensor.second;
+
+        QByteArray data(reinterpret_cast<const char*>(&request), sizeof(sensor_header) + request.header.length);
+        socket_->write(data);
+    }
+
     socket_->flush();
 
     qDebug() << "Sensor request verzonden.";

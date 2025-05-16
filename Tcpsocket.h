@@ -1,23 +1,25 @@
 #ifndef TCPSOCKET_H
 #define TCPSOCKET_H
 
-#include <QObject>
+#include "packets.h"
 #include <QByteArray>
 #include <QDebug>
-#include <QTimer.h>
+#include <QObject>
 #include <QString>
 #include <QTcpSocket>
-#include "packets.h"
+#include <QTimer.h>
 
-class Tcpsocket : public QObject{
+class Tcpsocket : public QObject
+{
     Q_OBJECT
 public:
-    Tcpsocket(const QString &host, int port);
+    Tcpsocket(const QString& host, int port);
     ~Tcpsocket();
 
-    bool connectToServer(); // Maakt connectie
-    bool sendPacket(const sensor_packet& packet); // Kijkt of connectie is gelukt en verstuurd daarna de pointer
+    bool connectToServer();
+    bool sendPacket(const sensor_packet& packet);
     void updateConnection(const QString& newIp, int newPort);
+    void setSensorList(const std::vector<std::pair<SensorType, int>>& sensorList);
 
 signals:
     void packetReceived(const sensor_packet& packet);
@@ -29,13 +31,13 @@ private slots:
     void onError(QAbstractSocket::SocketError socketError);
     void requestSensorPacket();
 
-
 private:
     QString socketHost;
     int socketPort;
     QTcpSocket* socket_; // pointer socket_
     QMap<QTcpSocket*, QByteArray> socketBuffers_;
     QTimer timer_;
+    std::vector<std::pair<SensorType, int>> sensorList_;
 };
 
 #endif // TCPSOCKET_H
