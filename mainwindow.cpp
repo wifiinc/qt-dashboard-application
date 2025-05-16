@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(settingsWindow, &SettingsWindow::rgbSensorIdChanged, this, &MainWindow::updateRgbSensorId);
     connect(settingsWindow, &SettingsWindow::bridgeIpChanged, this, &MainWindow::updateBridgeIp);
 
+    QString stylesheet = QString("background-color: %1;").arg(huidigekleurRGBLed.name());
+    ui->rgbLightColorWidget->setStyleSheet(stylesheet);
 }
 
 MainWindow::~MainWindow()
