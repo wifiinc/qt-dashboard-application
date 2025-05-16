@@ -15,7 +15,9 @@ Tcpsocket::Tcpsocket(const QString &host, int port)
 
 Tcpsocket::~Tcpsocket()
 {
-    socket_->disconnect();
+    if (socket_->state() != QAbstractSocket::ConnectedState) {
+        socket_->disconnect();
+    }
     socket_->deleteLater();
 }
 
@@ -128,7 +130,9 @@ void Tcpsocket::requestSensorPacket() {
 }
 
 void Tcpsocket::updateConnection(const QString& newIp, int newPort) {
-    socket_->disconnect();
+    if (socket_->state() != QAbstractSocket::ConnectedState) {
+        socket_->disconnect();
+    }
     this->socketHost = newIp;
     this->socketPort = newPort;
     connectToServer();
