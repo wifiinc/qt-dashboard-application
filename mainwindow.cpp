@@ -26,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("L&B Automatisatie Dashboard");
     this->setWindowIcon(QIcon(":/icon.png"));
 
+    QAction* settingsAction = new QAction("Instellingen", this);
+    connect(settingsAction, &QAction::triggered, this, &MainWindow::on_btnOpenSettings_clicked);
+
+    ui->menubar->addAction(settingsAction);
+
     settingsWindow = new SettingsWindow(this);
 
     connect(settingsWindow, &SettingsWindow::rgbSensorIdChanged, this, &MainWindow::updateRgbSensorId);
@@ -79,6 +84,7 @@ void MainWindow::requestluisteren(){
 void MainWindow::on_btnOpenSettings_clicked()
 {
     settingsWindow->setRgbSensorId(rgbSensorId);
+
     settingsWindow->setBridgeIp(bridgeIp);
     settingsWindow->setBridgePort(bridgePort);
 
