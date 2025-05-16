@@ -26,8 +26,13 @@ void SettingsWindow::on_btnSave_clicked()
     QString newIp = ui->lineEditBridgeIp->text();
     int newPort = ui->spinBoxBridgePort->value();
 
+    int tafel1SensorId = ui->spinBoxTafel1SensorId->value();
+    int tafel2SensorId = ui->spinBoxTafel2SensorId->value();
+    int tafel3SensorId = ui->spinBoxTafel3SensorId->value();
+
     emit rgbSensorIdChanged(newSensorId);
     emit bridgeIpChanged(newIp, newPort);
+    emit tafelSensorIdChanged(tafel1SensorId, tafel2SensorId ,tafel3SensorId);
     close();
 }
 
@@ -45,4 +50,11 @@ void SettingsWindow::setBridgeIp(const QString &ip)
 void SettingsWindow::setBridgePort(int port)
 {
     ui->spinBoxBridgePort->setValue(port);
+}
+
+void SettingsWindow::setTafelSensorId(int tafel1, int tafel2, int tafel3)
+{
+    ui->spinBoxTafel1SensorId->setValue(tafel1);
+    ui->spinBoxTafel2SensorId->setValue(tafel2);
+    ui->spinBoxTafel3SensorId->setValue(tafel3);
 }

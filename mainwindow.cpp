@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(settingsWindow, &SettingsWindow::rgbSensorIdChanged, this, &MainWindow::updateRgbSensorId);
     connect(settingsWindow, &SettingsWindow::bridgeIpChanged, this, &MainWindow::updateBridgeIp);
-
+    connect(settingsWindow, &SettingsWindow::tafelSensorIdChanged, this, &MainWindow::updateTafelSensorId);
 }
 
 MainWindow::~MainWindow()
@@ -78,6 +78,14 @@ void MainWindow::updateRgbSensorId(int newID)
 {
     qDebug() << "Sensor ID aangepast naar:" << newID;
     rgbSensorId = newID;
+
+    client.setSensorList({
+      {SensorType::LIGHT, rgbSensorId},
+      {SensorType::RGB_LIGHT, rgbSensorId},
+      {SensorType::LIGHT, tafel1SensorId},
+      {SensorType::LIGHT, tafel2SensorId},
+      {SensorType::LIGHT, tafel3SensorId},
+    });
 }
 
 void MainWindow::updateBridgeIp(const QString& newIp, int newPort)
@@ -89,6 +97,20 @@ void MainWindow::updateBridgeIp(const QString& newIp, int newPort)
     qDebug() << "Bridge Port aangepast naar:" << bridgePort;
 }
 
+void MainWindow::updateTafelSensorId(int tafel1, int tafel2, int tafel3)
+{
+    tafel1SensorId = tafel1;
+    tafel2SensorId = tafel2;
+    tafel3SensorId = tafel1;
+
+    client.setSensorList({
+        {SensorType::LIGHT, rgbSensorId},
+        {SensorType::RGB_LIGHT, rgbSensorId},
+        {SensorType::LIGHT, tafel1SensorId},
+        {SensorType::LIGHT, tafel2SensorId},
+        {SensorType::LIGHT, tafel3SensorId},
+    });
+}
 
 void MainWindow::on_changeRGBBtn_clicked()
 {

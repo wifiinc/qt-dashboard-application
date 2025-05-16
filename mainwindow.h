@@ -21,7 +21,7 @@ private slots:
     void on_btnOpenSettings_clicked();
     void updateRgbSensorId(int newID);
     void updateBridgeIp(const QString& newIp, int newPort);
-
+    void updateTafelSensorId(int tafel1, int tafel2, int tafel3);
 
     void on_changeRGBBtn_clicked();
     void on_saveRGBBtn_clicked();
