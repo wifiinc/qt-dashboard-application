@@ -31,11 +31,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::requestluisteren(){
+void MainWindow::requestluisteren()
+{
     client.connectToServer();
-    QObject::connect(&client, &Tcpsocket::packetReceived, [](const sensor_packet& packet) {
-        qDebug() << "Packet ontvangen van sensor ID:"
-                 << packet.data.generic.metadata.sensor_id;
+    connect(&client, &Tcpsocket::packetReceived, [](const sensor_packet& packet) {
+        qDebug() << "Packet ontvangen van sensor ID:" << packet.data.generic.metadata.sensor_id;
     });
 }
 

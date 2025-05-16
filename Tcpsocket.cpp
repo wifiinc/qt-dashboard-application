@@ -74,12 +74,6 @@ void Tcpsocket::onReadyRead(){
         std::memcpy(&header, buffer.constData(), sizeof(sensor_header));
         int fullPacketSize = sizeof(sensor_header) + header.length;
 
-        if (header.ptype != PacketType::DASHBOARD_RESPONSE) {
-            continue; // We only process DASHBOARD_RESPONSE packets;
-        }
-
-        qDebug() << "Dashboard response ontvangen.";
-
         //hebben we al genoeg voor het hele pakket?
         if(buffer.size() < fullPacketSize){
             return;
@@ -94,8 +88,13 @@ void Tcpsocket::onReadyRead(){
         std::memcpy(&packet, packetData.constData(), fullPacketSize);
 
         // emit signaal naar rest
-        emit packetReceived(packet);
-
+        if (header.ptype == PacketType::DASHBOARD_RESPONSE) {
+            qDebug() << "Dashboard response ontvangen.";
+            qDebug() << "Ontvangen bytes:" << packetData.toHex(' ');
+            emit packetReceived(packet);
+        } else {
+            qDebug() << "Ontvangen packet van ander type:" << static_cast<int>(packet.header.ptype);
+        }
     }
 }
 
