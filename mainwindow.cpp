@@ -37,6 +37,33 @@ void MainWindow::requestluisteren()
     connect(&client, &Tcpsocket::packetReceived, [](const sensor_packet& packet) {
         qDebug() << "Packet ontvangen van sensor ID:" << packet.data.generic.metadata.sensor_id;
     });
+
+    connect(&client, &Tcpsocket::packetReceived, [this](const sensor_packet& packet) {
+        if (packet.data.generic.metadata.sensor_type == SensorType::LIGHT) {
+            if (packet.data.generic.metadata.sensor_id == tafel1SensorId) {
+                tafel1State = packet.data.light.target_state == 1 ? true : false;
+                ui->tafel1Status->setText(tafel1State ? "Tafel staat AAN" : "Tafel staat UIT");
+            }
+        }
+    });
+
+    connect(&client, &Tcpsocket::packetReceived, [this](const sensor_packet& packet) {
+        if (packet.data.generic.metadata.sensor_type == SensorType::LIGHT) {
+            if (packet.data.generic.metadata.sensor_id == tafel2SensorId) {
+                tafel2State = packet.data.light.target_state == 1 ? true : false;
+                ui->tafel2Status->setText(tafel2State ? "Tafel staat AAN" : "Tafel staat UIT");
+            }
+        }
+    });
+
+    connect(&client, &Tcpsocket::packetReceived, [this](const sensor_packet& packet) {
+        if (packet.data.generic.metadata.sensor_type == SensorType::LIGHT) {
+            if (packet.data.generic.metadata.sensor_id == tafel3SensorId) {
+                tafel3State = packet.data.light.target_state == 1 ? true : false;
+                ui->tafel3Status->setText(tafel3State ? "Tafel staat AAN" : "Tafel staat UIT");
+            }
+        }
+    });
 }
 
 void MainWindow::on_btnOpenSettings_clicked()
@@ -103,6 +130,51 @@ void MainWindow::on_checkBoxLightOn_toggled(bool checked)
     pakket.data.light.metadata.sensor_type = SensorType::LIGHT;
     pakket.data.light.metadata.sensor_id = static_cast<uint8_t>(rgbSensorId);
     pakket.data.light.target_state = checked ? 1 : 0;
+
+    client.sendPacket(pakket);
+}
+
+void MainWindow::on_tafel1Toggle_clicked()
+{
+    tafel1State = !tafel1State;
+    ui->tafel1Status->setText(tafel1State ? "Tafel staat AAN" : "Tafel staat UIT");
+
+    sensor_packet pakket;
+    pakket.header.ptype = PacketType::DASHBOARD_POST;
+    pakket.header.length = sizeof(sensor_packet_light);
+    pakket.data.light.metadata.sensor_type = SensorType::LIGHT;
+    pakket.data.light.metadata.sensor_id = static_cast<uint8_t>(tafel1SensorId);
+    pakket.data.light.target_state = tafel1State ? 1 : 0;
+
+    client.sendPacket(pakket);
+}
+
+void MainWindow::on_tafel2Toggle_clicked()
+{
+    tafel2State = !tafel2State;
+    ui->tafel2Status->setText(tafel2State ? "Tafel staat AAN" : "Tafel staat UIT");
+
+    sensor_packet pakket;
+    pakket.header.ptype = PacketType::DASHBOARD_POST;
+    pakket.header.length = sizeof(sensor_packet_light);
+    pakket.data.light.metadata.sensor_type = SensorType::LIGHT;
+    pakket.data.light.metadata.sensor_id = static_cast<uint8_t>(tafel2SensorId);
+    pakket.data.light.target_state = tafel2State ? 1 : 0;
+
+    client.sendPacket(pakket);
+}
+
+void MainWindow::on_tafel3Toggle_clicked()
+{
+    tafel3State = !tafel3State;
+    ui->tafel3Status->setText(tafel3State ? "Tafel staat AAN" : "Tafel staat UIT");
+
+    sensor_packet pakket;
+    pakket.header.ptype = PacketType::DASHBOARD_POST;
+    pakket.header.length = sizeof(sensor_packet_light);
+    pakket.data.light.metadata.sensor_type = SensorType::LIGHT;
+    pakket.data.light.metadata.sensor_id = static_cast<uint8_t>(tafel3SensorId);
+    pakket.data.light.target_state = tafel3State ? 1 : 0;
 
     client.sendPacket(pakket);
 }

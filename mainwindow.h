@@ -25,8 +25,11 @@ private slots:
 
     void on_changeRGBBtn_clicked();
     void on_saveRGBBtn_clicked();
-
     void on_checkBoxLightOn_toggled(bool checked);
+
+    void on_tafel1Toggle_clicked();
+    void on_tafel2Toggle_clicked();
+    void on_tafel3Toggle_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -37,6 +40,12 @@ private:
     SettingsWindow* settingsWindow;
     void applyLightColor(int r, int g, int b);
     QColor huidigekleurRGBLed = Qt::white;
+    int tafel1SensorId = 2;
+    bool tafel1State = false;
+    int tafel2SensorId = 1;
+    bool tafel2State = false;
+    int tafel3SensorId = 2;
+    bool tafel3State = false;
 };
 
 #endif // MAINWINDOW_H
