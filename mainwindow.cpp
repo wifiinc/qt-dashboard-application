@@ -64,34 +64,6 @@ void MainWindow::writeSettings() {
 
   settings.beginGroup("Sensors");
   settings.setValue("rgbSensorId", rgbSensorId);
-  settings.endGroup();
-}
-
-void MainWindow::loadSettings() {
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope,
-                     "LBAutomatisatie", "DashboardApp");
-
-  settings.beginGroup("Connection");
-  bridgeIp = settings.value("bridgeIp", "127.0.0.1").toString();
-  bridgePort = settings.value("bridgePort", 5000).toInt();
-  settings.endGroup();
-
-  settings.beginGroup("Sensors");
-  rgbSensorId = settings.value("rgbSensorId", 1).toInt();
-  settings.endGroup();
-}
-
-void MainWindow::writeSettings() {
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope,
-                     "LBAutomatisatie", "DashboardApp");
-
-  settings.beginGroup("Connection");
-  settings.setValue("bridgeIp", bridgeIp);
-  settings.setValue("bridgePort", bridgePort);
-  settings.endGroup();
-
-  settings.beginGroup("Sensors");
-  settings.setValue("rgbSensorId", rgbSensorId);
   settings.setValue("tafel1SensorId", tafel1SensorId);
   settings.setValue("tafel2SensorId", tafel2SensorId);
   settings.setValue("tafel3SensorId", tafel3SensorId);
