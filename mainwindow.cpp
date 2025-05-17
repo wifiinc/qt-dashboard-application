@@ -196,7 +196,7 @@ void MainWindow::updateBridgeIp(const QString& newIp, int newPort) {
 void MainWindow::updateTafelSensorId(int tafel1, int tafel2, int tafel3) {
   tafel1SensorId = tafel1;
   tafel2SensorId = tafel2;
-  tafel3SensorId = tafel1;
+  tafel3SensorId = tafel3;
 
   client.setSensorList({
       {SensorType::LIGHT, rgbSensorId},
