@@ -42,6 +42,8 @@ MainWindow::MainWindow(QWidget* parent)
           &MainWindow::updateBridgeIp);
   connect(settingsWindow, &SettingsWindow::tafelSensorIdChanged, this,
           &MainWindow::updateTafelSensorId);
+  connect(settingsWindow, &SettingsWindow::updateSensorList, this,
+          &MainWindow::setSensorList);
 
   QString stylesheet =
       QString("background-color: %1;").arg(huidigekleurRGBLed.name());
@@ -51,6 +53,17 @@ MainWindow::MainWindow(QWidget* parent)
 MainWindow::~MainWindow() {
   delete settingsWindow;
   delete ui;
+}
+
+void MainWindow::setSensorList()
+{
+    client.setSensorList({
+        {SensorType::LIGHT, rgbSensorId},
+        {SensorType::RGB_LIGHT, rgbSensorId},
+        {SensorType::LIGHT, tafel1SensorId},
+        {SensorType::LIGHT, tafel2SensorId},
+        {SensorType::LIGHT, tafel3SensorId},
+    });
 }
 
 void MainWindow::writeSettings() {
@@ -143,14 +156,6 @@ void MainWindow::updateRgbSensorId(int newID) {
   qDebug() << "Sensor ID aangepast naar:" << newID;
   rgbSensorId = newID;
 
-  client.setSensorList({
-      {SensorType::LIGHT, rgbSensorId},
-      {SensorType::RGB_LIGHT, rgbSensorId},
-      {SensorType::LIGHT, tafel1SensorId},
-      {SensorType::LIGHT, tafel2SensorId},
-      {SensorType::LIGHT, tafel3SensorId},
-  });
-
   writeSettings();
 }
 
@@ -169,14 +174,6 @@ void MainWindow::updateTafelSensorId(int tafel1, int tafel2, int tafel3) {
   tafel1SensorId = tafel1;
   tafel2SensorId = tafel2;
   tafel3SensorId = tafel3;
-
-  client.setSensorList({
-      {SensorType::LIGHT, rgbSensorId},
-      {SensorType::RGB_LIGHT, rgbSensorId},
-      {SensorType::LIGHT, tafel1SensorId},
-      {SensorType::LIGHT, tafel2SensorId},
-      {SensorType::LIGHT, tafel3SensorId},
-  });
 
   writeSettings();
 }

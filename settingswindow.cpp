@@ -2,7 +2,8 @@
 #include "ui_settingswindow.h"
 
 SettingsWindow::SettingsWindow(QWidget *parent)
-    : QDialog(parent), ui(new Ui::SettingsWindow)
+    : QDialog(parent)
+    , ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
 
@@ -32,10 +33,11 @@ void SettingsWindow::on_btnSave_clicked()
 
     emit rgbSensorIdChanged(newSensorId);
     emit bridgeIpChanged(newIp, newPort);
-    emit tafelSensorIdChanged(tafel1SensorId, tafel2SensorId ,tafel3SensorId);
+    emit tafelSensorIdChanged(tafel1SensorId, tafel2SensorId, tafel3SensorId);
+    emit updateSensorList();
+
     close();
 }
-
 
 void SettingsWindow::setRgbSensorId(int id)
 {

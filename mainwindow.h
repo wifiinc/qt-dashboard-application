@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow {
   ~MainWindow();
 
  private slots:
+  void setSensorList();
   void writeSettings();
   void loadSettings();
   void requestluisteren();
