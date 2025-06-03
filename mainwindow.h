@@ -6,6 +6,8 @@
 
 #include "Tcpsocket.h"
 #include "settingswindow.h"
+#include "Overzichtrestaurant.h"
+#include "mapwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -38,7 +40,7 @@ class MainWindow : public QMainWindow {
   void on_tafel2Toggle_clicked();
   void on_tafel3Toggle_clicked();
 
- private:
+  private:
   Ui::MainWindow* ui;
   Tcpsocket client;
   SettingsWindow* settingsWindow;
@@ -54,6 +56,7 @@ class MainWindow : public QMainWindow {
   bool tafel1State = false;
   bool tafel2State = false;
   bool tafel3State = false;
+  MapWindow *mapWindow;
 };
 
 #endif  // MAINWINDOW_H

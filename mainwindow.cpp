@@ -48,6 +48,14 @@ MainWindow::MainWindow(QWidget* parent)
   QString stylesheet =
       QString("background-color: %1;").arg(huidigekleurRGBLed.name());
   ui->rgbLightColorWidget->setStyleSheet(stylesheet);
+
+  mapWindow = new MapWindow(this);
+
+  QAction *mapAction = new QAction("Toon Kaart", this);
+  connect(mapAction, &QAction::triggered, this, [=]() {
+      mapWindow->show();
+  });
+  ui->menubar->addAction(mapAction);
 }
 
 MainWindow::~MainWindow() {
@@ -263,3 +271,4 @@ void MainWindow::on_tafel3Toggle_clicked() {
 
   client.sendPacket(pakket);
 }
+
