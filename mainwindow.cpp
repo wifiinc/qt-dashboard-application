@@ -51,12 +51,30 @@ MainWindow::MainWindow(QWidget* parent)
 
   mapWindow = new MapWindow(this);
 
-  QAction *mapAction = new QAction("Toon Kaart", this);
+  // 2) Maak een QAction "Toon Kaart" en verbind hem
+  QAction *mapAction = new QAction(tr("Toon Kaart"), this);
+
+  // Zorg dat wanneer de gebruiker op "Toon Kaart" klikt, we mapWindow->show() aanroepen
   connect(mapAction, &QAction::triggered, this, [=]() {
-      mapWindow->show();
+      if (mapWindow) {
+          mapWindow->show();
+          mapWindow->raise();           // (optioneel) breng het op de voorgrond
+          mapWindow->activateWindow();  // (optioneel) focus op het venster
+      }
   });
+
+  // 3) Voeg de actie toe aan de menubar
+  //    Je kunt dit aanpassen als je een submenu hebt, bijv. ui->menuBestand->addAction(...)
   ui->menubar->addAction(mapAction);
+  // ───────────────────────────────────────────────────────
+
+  // … hier volgt je rest van de MainWindow‐init: b.v. TCP‐client, andere acties, etc. …
+
+  // (Optioneel) Als je lampstatus uit je TCP‐handler komt, kun je dit signaal emitten:
+  // connect(this, &MainWindow::lampStatusChanged,
+  //         mapWindow, &MapWindow::updateLampStatus);
 }
+
 
 MainWindow::~MainWindow() {
   delete settingsWindow;

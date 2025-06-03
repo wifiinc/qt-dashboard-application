@@ -8,6 +8,7 @@
 #include "settingswindow.h"
 #include "Overzichtrestaurant.h"
 #include "mapwindow.h"
+#include "hoverlabel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
