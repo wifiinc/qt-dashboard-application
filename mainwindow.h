@@ -41,6 +41,9 @@ class MainWindow : public QMainWindow {
   void on_tafel2Toggle_clicked();
   void on_tafel3Toggle_clicked();
 
+
+  void on_pushButton_clicked();
+
   private:
   Ui::MainWindow* ui;
   Tcpsocket client;

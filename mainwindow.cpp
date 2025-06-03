@@ -28,11 +28,11 @@ MainWindow::MainWindow(QWidget* parent)
   this->setWindowTitle("L&B Automatisatie Dashboard");
   this->setWindowIcon(QIcon(":/icon.png"));
 
-  QAction* settingsAction = new QAction("Instellingen", this);
-  connect(settingsAction, &QAction::triggered, this,
+ QAction* settingsAction = new QAction("Instellingen", this);
+ connect(settingsAction, &QAction::triggered, this,
           &MainWindow::on_btnOpenSettings_clicked);
 
-  ui->menubar->addAction(settingsAction);
+ ui->menubar->addAction(settingsAction);
 
   settingsWindow = new SettingsWindow(this);
 
@@ -288,5 +288,11 @@ void MainWindow::on_tafel3Toggle_clicked() {
   pakket.data.light.target_state = tafel3State ? 1 : 0;
 
   client.sendPacket(pakket);
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    mapWindow->show();
 }
 
