@@ -27,7 +27,6 @@ set(PROJECT_SOURCES
         packets.h
         icon.png
         resources.qrc
-        ${RESOURCES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
