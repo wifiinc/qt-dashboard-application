@@ -50,8 +50,9 @@ MapWindow::MapWindow(QWidget *parent)
     QPointF RGB2Pos(358.0,  227.0);
     QPointF Beweging1Pos(200.0, 245.0);
     QPointF Beweging2Pos(495.0, 245.0);
-    QPointF CO2Pos(200.0, 245.0);
-    QPointF TEMPPos(495.0, 245.0);
+    QPointF CO2Pos(380.0,  50.0);
+    QPointF TEMPPos(168.0,  45.0);
+    QPointF VenPos(27.0,  73.0);
 
     // 7) Maak voor elk lampje een LampInfo met coördinaten + statusText
     HoverLabel::LampInfo info1; info1.point = lamp1Pos; info1.statusText = "Lamp 1: UIT";
@@ -63,10 +64,11 @@ MapWindow::MapWindow(QWidget *parent)
     HoverLabel::LampInfo info7; info7.point = Beweging2Pos; info7.statusText = "Geen beweging";
     HoverLabel::LampInfo info8; info8.point = CO2Pos; info8.statusText = "CO2 waarde kapot";
     HoverLabel::LampInfo info9; info9.point = TEMPPos; info9.statusText = "Geen temp";
+    HoverLabel::LampInfo info10; info10.point = VenPos; info10.statusText = "Ven kapot";
 
     // 8) Voeg ze toe aan lampList
     imageLabel->lampList.clear();
-    imageLabel->lampList << info1 << info2 << info3 << info4 << info5 << info6 << info7;
+    imageLabel->lampList << info1 << info2 << info3 << info4 << info5 << info6 << info7 <<info8 <<info9 << info10;
 
     // 9) Voeg de HoverLabel toe aan de layout
     layout->addWidget(imageLabel);
