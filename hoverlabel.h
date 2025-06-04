@@ -1,4 +1,3 @@
-// HoverLabel.h
 #ifndef HOVERLABEL_H
 #define HOVERLABEL_H
 
@@ -116,7 +115,7 @@ protected:
                 hoveredLampIndex = -1;
                 update(); // cirkel verwijderen
             }
-            QToolTip::hideText();
+           QToolTip::hideText();
         }
     }
 
