@@ -1,6 +1,9 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
   <qresource>
+    <file>plattegrond.png</file>
+  </qresource>
+  <qresource>
     <file>icon.png</file>
   </qresource>
 </RCC>

@@ -15,18 +15,11 @@ MapWindow::MapWindow(QWidget *parent)
     // 1) Maak de layout voor dit venster
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    // 2) Creëer de HoverLabel
     imageLabel = new HoverLabel(this);
     imageLabel->setAlignment(Qt::AlignCenter);
     imageLabel->setMouseTracking(true);
 
-    // 3) Laad de originele PNG (let erop dat je het juiste resource‐pad hebt)
-    //    In je .qrc moet staan:
-    //      <qresource prefix="/image">
-    //          <file>Plattegrondvandeentreevanhetgebouw.png</file>
-    //      </qresource>
-    //    Vervolgens laad je met “:/image/…”
-    QPixmap origMap("image/Plattegrondvandeentreevanhetgebouw.png");
+    QPixmap origMap(":/plattegrond.png");
     //QString resPath = ":images/Plattegrondvandeentreevanhetgebouw.png";
     //if (!QFile::exists(resPath)) {
     //    qWarning() << "MapWindow: resource bestaat NIET op pad:" << resPath;
@@ -35,14 +28,9 @@ MapWindow::MapWindow(QWidget *parent)
     if (origMap.isNull()) {
         qWarning() << "MapWindow: kon plattegrond PNG niet laden!";
     } else {
-        // 4) Sla de originele pixmap op in HoverLabel
         imageLabel->originalPixmap = origMap;
-        // Let op: we *schalen niet* hier. Dat gebeurt in HoverLabel::resizeEvent.
     }
 
-    // 6) Vul de DRIE lamp‐punten in met originele pixel‐coördinaten
-    //    **Belangrijk**: meet deze waarden in GIMP/Photoshop/Preview in de originele PNG
-    //    exact af. Onderstaande coördinaten zijn slechts een voorbeeld en moeten aangepast.
     QPointF lamp1Pos(250.0,  55.0);
     QPointF lamp2Pos(450.0,  50.0);
     QPointF lamp3Pos(515.0, 75.0);

@@ -24,6 +24,10 @@ set(PROJECT_SOURCES
         settingswindow.cpp
         settingswindow.h
         settingswindow.ui
+        mapwindow.h
+        mapwindow.cpp
+        hoverlabel.h
+        hoverlabel.cpp
         packets.h
         icon.png
         resources.qrc
@@ -33,13 +37,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(dashboard
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-
-
-
-        mapwindow.h
-        mapwindow.cpp
-        hoverlabel.h
-        hoverlabel.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET dashboard APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -83,9 +80,6 @@ install(TARGETS dashboard
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-
-file(COPY ${CMAKE_SOURCE_DIR}/image/Plattegrondvandeentreevanhetgebouw.png
-  DESTINATION ${CMAKE_BINARY_DIR}/image)
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(dashboard)

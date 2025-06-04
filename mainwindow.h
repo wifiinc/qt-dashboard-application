@@ -48,6 +48,7 @@ class MainWindow : public QMainWindow {
   Ui::MainWindow* ui;
   Tcpsocket client;
   SettingsWindow* settingsWindow;
+  MapWindow *mapWindow;
 
   int rgbSensorId;
   QString bridgeIp;
@@ -60,7 +61,6 @@ class MainWindow : public QMainWindow {
   bool tafel1State = false;
   bool tafel2State = false;
   bool tafel3State = false;
-  MapWindow *mapWindow;
 };
 
 #endif  // MAINWINDOW_H
