@@ -180,20 +180,6 @@
       </layout>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="btnOpenSettings">
-      <property name="text">
-       <string>Instellingen</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Toon kaart</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -202,7 +188,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

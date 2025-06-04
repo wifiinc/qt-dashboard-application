@@ -3,7 +3,7 @@
 #define MAPWINDOW_H
 
 #include <QDialog>
-#include "hoverlabel.h"   // Maak HoverLabel in deze header beschikbaar
+#include "hoverlabel.h"
 
 class MapWindow : public QDialog
 {
@@ -14,7 +14,6 @@ public:
     ~MapWindow();
 
 public slots:
-    // (optioneel) slot om dynamisch de status van lampjes bij te werken
     void updateLampStatus(int lampIndex, const QString &nieuwTekst);
 
 private:

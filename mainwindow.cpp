@@ -28,11 +28,30 @@ MainWindow::MainWindow(QWidget* parent)
   this->setWindowTitle("L&B Automatisatie Dashboard");
   this->setWindowIcon(QIcon(":/icon.png"));
 
- QAction* settingsAction = new QAction("Instellingen", this);
- connect(settingsAction, &QAction::triggered, this,
+  QAction* settingsAction = new QAction("Instellingen", this);
+  connect(settingsAction, &QAction::triggered, this,
           &MainWindow::on_btnOpenSettings_clicked);
 
- ui->menubar->addAction(settingsAction);
+  mapWindow = new MapWindow(this);
+
+  QAction *kaartAction = new QAction("Interactieve kaart", this);
+  connect(kaartAction, &QAction::triggered, this, [=]() {
+      if (mapWindow) {
+          mapWindow->show();
+          mapWindow->raise();
+          mapWindow->activateWindow();
+      }
+  });
+
+#ifndef Q_OS_MAC
+  ui->menubar->addAction(settingsAction);
+  ui->menubar->addAction(kaartAction);
+#else
+  QMenu* fileMenu = new QMenu("File", this);
+  fileMenu->addAction(settingsAction);
+  fileMenu->addAction(kaartAction);
+  ui->menubar->addMenu(fileMenu);
+#endif
 
   settingsWindow = new SettingsWindow(this);
 
@@ -45,34 +64,12 @@ MainWindow::MainWindow(QWidget* parent)
   connect(settingsWindow, &SettingsWindow::updateSensorList, this,
           &MainWindow::setSensorList);
 
+
+
+
   QString stylesheet =
       QString("background-color: %1;").arg(huidigekleurRGBLed.name());
   ui->rgbLightColorWidget->setStyleSheet(stylesheet);
-
-  mapWindow = new MapWindow(this);
-
-  // 2) Maak een QAction "Toon Kaart" en verbind hem
-  QAction *mapAction = new QAction(tr("Toon Kaart"), this);
-
-  // Zorg dat wanneer de gebruiker op "Toon Kaart" klikt, we mapWindow->show() aanroepen
-  connect(mapAction, &QAction::triggered, this, [=]() {
-      if (mapWindow) {
-          mapWindow->show();
-          mapWindow->raise();           // (optioneel) breng het op de voorgrond
-          mapWindow->activateWindow();  // (optioneel) focus op het venster
-      }
-  });
-
-  // 3) Voeg de actie toe aan de menubar
-  //    Je kunt dit aanpassen als je een submenu hebt, bijv. ui->menuBestand->addAction(...)
-  ui->menubar->addAction(mapAction);
-  // ───────────────────────────────────────────────────────
-
-  // … hier volgt je rest van de MainWindow‐init: b.v. TCP‐client, andere acties, etc. …
-
-  // (Optioneel) Als je lampstatus uit je TCP‐handler komt, kun je dit signaal emitten:
-  // connect(this, &MainWindow::lampStatusChanged,
-  //         mapWindow, &MapWindow::updateLampStatus);
 }
 
 
@@ -288,11 +285,5 @@ void MainWindow::on_tafel3Toggle_clicked() {
   pakket.data.light.target_state = tafel3State ? 1 : 0;
 
   client.sendPacket(pakket);
-}
-
-
-void MainWindow::on_pushButton_clicked()
-{
-    mapWindow->show();
 }
 
