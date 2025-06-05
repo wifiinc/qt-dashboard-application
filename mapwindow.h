@@ -14,7 +14,7 @@ public:
     ~MapWindow();
 
 public slots:
-    void updateLampStatus(int lampIndex, const QString &nieuwTekst);
+    void updateDeviceStatus(int deviceIndex, const QString &nieuwTekst);
 
 private:
     HoverLabel *imageLabel;

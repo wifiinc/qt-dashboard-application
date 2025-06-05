@@ -42,19 +42,19 @@ MapWindow::MapWindow(QWidget *parent)
     QPointF TEMPPos(168.0,  45.0);
     QPointF VenPos(27.0,  73.0);
 
-    // 7) Maak voor elk lampje een LampInfo met coördinaten + statusText
-    HoverLabel::LampInfo info1; info1.point = lamp1Pos; info1.statusText = "Lamp 1: UIT";
-    HoverLabel::LampInfo info2; info2.point = lamp2Pos; info2.statusText = "Lamp 2: AAN";
-    HoverLabel::LampInfo info3; info3.point = lamp3Pos; info3.statusText = "Lamp 3: DIM 50%";
-    HoverLabel::LampInfo info4; info4.point = RGB1Pos; info4.statusText = "Rgbww : UIT";
-    HoverLabel::LampInfo info5; info5.point = RGB2Pos; info5.statusText = "Rgbww : UIT";
-    HoverLabel::LampInfo info6; info6.point = Beweging1Pos; info6.statusText = "Geen beweging";
-    HoverLabel::LampInfo info7; info7.point = Beweging2Pos; info7.statusText = "Geen beweging";
-    HoverLabel::LampInfo info8; info8.point = CO2Pos; info8.statusText = "CO2 waarde kapot";
-    HoverLabel::LampInfo info9; info9.point = TEMPPos; info9.statusText = "Geen temp";
-    HoverLabel::LampInfo info10; info10.point = VenPos; info10.statusText = "Ven kapot";
+    // 7) Maak voor elk apparaat een DeviceInfo met coördinaten + statusText
+    HoverLabel::DeviceInfo info1; info1.point = lamp1Pos; info1.statusText = "Lamp 1: UIT";
+    HoverLabel::DeviceInfo info2; info2.point = lamp2Pos; info2.statusText = "Lamp 2: AAN";
+    HoverLabel::DeviceInfo info3; info3.point = lamp3Pos; info3.statusText = "Lamp 3: DIM 50%";
+    HoverLabel::DeviceInfo info4; info4.point = RGB1Pos; info4.statusText = "Rgbww : UIT";
+    HoverLabel::DeviceInfo info5; info5.point = RGB2Pos; info5.statusText = "Rgbww : UIT";
+    HoverLabel::DeviceInfo info6; info6.point = Beweging1Pos; info6.statusText = "Geen beweging";
+    HoverLabel::DeviceInfo info7; info7.point = Beweging2Pos; info7.statusText = "Geen beweging";
+    HoverLabel::DeviceInfo info8; info8.point = CO2Pos; info8.statusText = "CO2 waarde kapot";
+    HoverLabel::DeviceInfo info9; info9.point = TEMPPos; info9.statusText = "Geen temp";
+    HoverLabel::DeviceInfo info10; info10.point = VenPos; info10.statusText = "Ven kapot";
 
-    // 8) Voeg ze toe aan lampList
+    // 8) Voeg ze toe aan Apparaten
     imageLabel->Apparaten.clear();
     imageLabel->Apparaten << info1 << info2 << info3 << info4 << info5 << info6 << info7 <<info8 <<info9 << info10;
 
@@ -70,11 +70,11 @@ MapWindow::~MapWindow()
     // Hier hoeft niets speciaals te gebeuren.
 }
 
-void MapWindow::updateLampStatus(int lampIndex, const QString &nieuwTekst)
+void MapWindow::updateDeviceStatus(int deviceIndex, const QString &nieuwTekst)
 {
-    // Als je later in MainWindow een signaal stuurt dat lampIndex (0..2) is veranderd:
-    if (lampIndex >= 0 && lampIndex < imageLabel->Apparaten.size()) {
-        imageLabel->Apparaten[lampIndex].statusText = nieuwTekst;
+    // Als je later in MainWindow een signaal stuurt dat deviceIndex (0..n) is veranderd:
+    if (deviceIndex >= 0 && deviceIndex < imageLabel->Apparaten.size()) {
+        imageLabel->Apparaten[deviceIndex].statusText = nieuwTekst;
         // Repaint niet per se nodig, want de tooltip verschijnt pas bij hover.
         imageLabel->update();
     }

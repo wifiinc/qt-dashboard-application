@@ -7,15 +7,6 @@
 #include <QPainter>
 #include <QResizeEvent>
 
-/*
-  HoverLabel: een subclass van QLabel die:
-  1) de originele (niet‐geschaalde) pixmap bewaart in originalPixmap
-  2) in mouseMoveEvent de muispositie vertaalt naar originele pixel‐coördinaten
-  3) controleert of je binnen hoverRadius bent van één van de lamp‐punten
-  4) indien ja, toont een QToolTip met de status van dat lampje
-  5) tekent een gele cirkel rond het lampje dat je hovert (paintEvent)
-*/
-
 class HoverLabel : public QLabel
 {
     Q_OBJECT
@@ -33,25 +24,25 @@ public:
     ~HoverLabel() override = default;
 
     // Struct om de positie (in originele pixmap‐pixels) en de tooltip‐tekst op te slaan
-    struct LampInfo {
+    struct DeviceInfo {
         QPointF point;       // (x,y) in de originele PNG‐pixels
         QString statusText;  // tooltip die getoond moet worden bij hover
     };
 
-    // Lijst van alle lampjes in originele afbeeldings‐coördinaten
-    QVector<LampInfo> Apparaten;
+    // Lijst van alle apparaten in originele afbeeldings‐coördinaten
+    QVector<DeviceInfo> Apparaten;
 
     // De niet‐geschaalde QPixmap (originele plattegrond), bijv. 1200×800 pixels
     QPixmap originalPixmap;
 
-    // Hoe ver (in ORIGINELE pixels) je van lamp‐point mag zitten om als “hover” te gelden
+    // Hoe ver (in ORIGINELE pixels) je van apparaat‐point mag zitten om als "hover" te gelden
     qreal hoverRadius;
 
 protected:
     // Wordt aangeroepen bij elke muisbeweging (ook zonder klikken)
     void mouseMoveEvent(QMouseEvent *event) override
     {
-        // 1) Als we geen originele pixmap hebben of geen lampjes, laat base class afhandelen
+        // 1) Als we geen originele pixmap hebben of geen apparaten, laat base class afhandelen
         if (originalPixmap.isNull() || Apparaten.isEmpty()) {
             QLabel::mouseMoveEvent(event);
             return;
@@ -92,13 +83,13 @@ protected:
         QPointF posInOrig(posInScaled.x() * scaleX,
                           posInScaled.y() * scaleY);
 
-        // 7) Loop door alle lampjes: kijk of afstand ≤ hoverRadius
+        // 7) Loop door alle apparaten: kijk of afstand ≤ hoverRadius
         bool found = false;
         for (int i = 0; i < Apparaten.size(); ++i) {
-            const LampInfo &li = Apparaten[i];
+            const DeviceInfo &li = Apparaten[i];
             qreal afstand = QLineF(li.point, posInOrig).length();
             if (afstand <= hoverRadius) {
-                // We hoveren over lampje i
+                // We hoveren over apparaat i
                 if (hoveredLampIndex != i) {
                     hoveredLampIndex = i;
                     update(); // trigger paintEvent om cirkel te tekenen
@@ -110,7 +101,7 @@ protected:
             }
         }
         if (!found) {
-            // Muiskoord niet binnen hoverRadius van wélk lampje
+            // Muiskoord niet binnen hoverRadius van wélk apparaat
             if (hoveredLampIndex != -1) {
                 hoveredLampIndex = -1;
                 update(); // cirkel verwijderen
@@ -125,7 +116,7 @@ protected:
         // 1) Laat QLabel de pixmap tekenen
         QLabel::paintEvent(ev);
 
-        // 2) Als we op een lampje hoveren (hoveredLampIndex ≥ 0), teken een cirkel
+        // 2) Als we op een apparaat hoveren (hoveredLampIndex ≥ 0), teken een cirkel
         if (hoveredLampIndex >= 0 && hoveredLampIndex < Apparaten.size()) {
             QPainter painter(this);
             painter.setRenderHint(QPainter::Antialiasing);
@@ -144,7 +135,7 @@ protected:
                 qRound(origPt.y() * scaleY) + yOffset
                 );
 
-            // Teken een gele cirkel (radius 20 pixels) rond het lampje
+            // Teken een gele cirkel (radius 20 pixels) rond het apparaat
             painter.setPen(QPen(Qt::yellow, 2));
             painter.drawEllipse(screenPt, 20, 20);
         }
@@ -163,7 +154,7 @@ protected:
     }
 
 private:
-    int hoveredLampIndex;  // index van het lampje waar we op dit moment over hoveren (-1 = geen)
+    int hoveredLampIndex;  // index van het apparaat waar we op dit moment over hoveren (-1 = geen)
 };
 
 #endif // HOVERLABEL_H
