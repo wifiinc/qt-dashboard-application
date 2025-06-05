@@ -32,7 +32,26 @@ MainWindow::MainWindow(QWidget* parent)
   connect(settingsAction, &QAction::triggered, this,
           &MainWindow::on_btnOpenSettings_clicked);
 
+  mapWindow = new MapWindow(this);
+
+  QAction *kaartAction = new QAction("Interactieve kaart", this);
+  connect(kaartAction, &QAction::triggered, this, [=]() {
+      if (mapWindow) {
+          mapWindow->show();
+          mapWindow->raise();
+          mapWindow->activateWindow();
+      }
+  });
+
+#ifndef Q_OS_MAC
   ui->menubar->addAction(settingsAction);
+  ui->menubar->addAction(kaartAction);
+#else
+  QMenu* fileMenu = new QMenu("File", this);
+  fileMenu->addAction(settingsAction);
+  fileMenu->addAction(kaartAction);
+  ui->menubar->addMenu(fileMenu);
+#endif
 
   settingsWindow = new SettingsWindow(this);
 
@@ -45,10 +64,14 @@ MainWindow::MainWindow(QWidget* parent)
   connect(settingsWindow, &SettingsWindow::updateSensorList, this,
           &MainWindow::setSensorList);
 
+
+
+
   QString stylesheet =
       QString("background-color: %1;").arg(huidigekleurRGBLed.name());
   ui->rgbLightColorWidget->setStyleSheet(stylesheet);
 }
+
 
 MainWindow::~MainWindow() {
   delete settingsWindow;
@@ -114,6 +137,9 @@ void MainWindow::requestluisteren() {
             tafel1State = packet.data.light.target_state == 1 ? true : false;
             ui->tafel1Status->setText(tafel1State ? "Tafel staat AAN"
                                                   : "Tafel staat UIT");
+            if (mapWindow) {
+              mapWindow->updateDeviceStatus(0, tafel1State ? "Lamp 1: AAN" : "Lamp 1: UIT");
+            }
           }
         }
       });
@@ -125,6 +151,9 @@ void MainWindow::requestluisteren() {
             tafel2State = packet.data.light.target_state == 1 ? true : false;
             ui->tafel2Status->setText(tafel2State ? "Tafel staat AAN"
                                                   : "Tafel staat UIT");
+            if (mapWindow) {
+              mapWindow->updateDeviceStatus(1, tafel2State ? "Lamp 2: AAN" : "Lamp 2: UIT");
+            }
           }
         }
       });
@@ -136,6 +165,24 @@ void MainWindow::requestluisteren() {
             tafel3State = packet.data.light.target_state == 1 ? true : false;
             ui->tafel3Status->setText(tafel3State ? "Tafel staat AAN"
                                                   : "Tafel staat UIT");
+            if (mapWindow) {
+              mapWindow->updateDeviceStatus(2, tafel3State ? "Lamp 3: AAN" : "Lamp 3: UIT");
+            }
+          }
+        }
+      });
+
+  connect(
+      &client, &Tcpsocket::packetReceived, [this](const sensor_packet& packet) {
+        if (packet.data.generic.metadata.sensor_type == SensorType::RGB_LIGHT) {
+          if (packet.data.generic.metadata.sensor_id == rgbSensorId) {
+            int r = packet.data.rgb_light.red_state;
+            int g = packet.data.rgb_light.green_state;
+            int b = packet.data.rgb_light.blue_state;
+            QString rgbText = QString("Rgbww : R:%1 G:%2 B:%3").arg(r).arg(g).arg(b);
+            if (mapWindow) {
+              mapWindow->updateDeviceStatus(3, rgbText);
+            }
           }
         }
       });
@@ -263,3 +310,4 @@ void MainWindow::on_tafel3Toggle_clicked() {
 
   client.sendPacket(pakket);
 }
+
