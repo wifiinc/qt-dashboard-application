@@ -40,6 +40,8 @@ class MainWindow : public QMainWindow {
   void on_tafel2Toggle_clicked();
   void on_tafel3Toggle_clicked();
 
+ void toonTemperatuur(float waarde);
+
   private:
   Ui::MainWindow* ui;
   Tcpsocket client;

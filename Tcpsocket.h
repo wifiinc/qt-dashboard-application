@@ -23,6 +23,7 @@ public:
 
 signals:
     void packetReceived(const sensor_packet& packet);
+    void temperatuurOntvangen(float temperatuur);
 
 private slots:
     void onReadyRead();

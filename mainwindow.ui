@@ -180,6 +180,19 @@
       </layout>
      </widget>
     </item>
+    <item>
+     <widget class="QLabel" name="labelTemperatuur">
+      <property name="text">
+       <string>Temperatuur: — °C</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignHCenter</set>
+      </property>
+      <property name="margin">
+       <number>10</number>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">

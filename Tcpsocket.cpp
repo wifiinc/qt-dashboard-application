@@ -9,7 +9,7 @@ Tcpsocket::Tcpsocket(const QString &host, int port)
     connect(socket_, &QTcpSocket::disconnected, this, &Tcpsocket::onDisconnected);
     connect(socket_, &QTcpSocket::readyRead, this, &Tcpsocket::onReadyRead);
     connect(socket_, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::errorOccurred),
-    this, &Tcpsocket::onError);
+            this, &Tcpsocket::onError);
 
     connect(&timer_, &QTimer::timeout, this, &Tcpsocket::requestSensorPacket);
 }
@@ -67,34 +67,36 @@ void Tcpsocket::onReadyRead(){
     buffer.append(client->readAll());
 
     while(true){
-        //Hebben we minstens genoeg voor de header?
         if(buffer.size() < static_cast<int>(sizeof(sensor_header))){
             return;
         }
 
-        //lees header
         sensor_header header;
         memcpy(&header, buffer.constData(), sizeof(sensor_header));
         int fullPacketSize = sizeof(sensor_header) + header.length;
 
-        //hebben we al genoeg voor het hele pakket?
         if(buffer.size() < fullPacketSize){
             return;
         }
 
-        //hebben we een volledig pakket
         QByteArray packetData = buffer.mid(0, fullPacketSize);
         buffer.remove(0, fullPacketSize);
 
-        //zet om naar struct
         sensor_packet packet;
         memcpy(&packet, packetData.constData(), fullPacketSize);
 
-        // emit signaal naar rest
         if (header.ptype == PacketType::DASHBOARD_RESPONSE) {
             qDebug() << "Dashboard response ontvangen.";
             qDebug() << "Ontvangen bytes:" << packetData.toHex(' ');
             emit packetReceived(packet);
+
+
+            if (packet.data.temperature.metadata.sensor_type == SensorType::TEMPERATURE) {
+                float waarde = packet.data.temperature.value;
+                qDebug() << "Temperatuur ontvangen:" << waarde;
+                emit temperatuurOntvangen(waarde);
+            }
+
         } else {
             qDebug() << "Ontvangen packet van ander type:" << static_cast<int>(packet.header.ptype);
         }
