@@ -12,6 +12,177 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="mainLayout">
+
+    <!-- RGB Verlichting -->
+    <item>
+     <widget class="QGroupBox" name="groupBoxRGB">
+      <property name="title">
+       <string>RGB Verlichting</string>
+      </property>
+      <layout class="QVBoxLayout" name="layoutRGB">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QWidget" name="rgbLightColorWidget" native="true"/>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QCheckBox" name="checkBoxLightOn">
+             <property name="text">
+              <string>Lamp aan</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>30</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="changeRGBBtn">
+             <property name="text">
+              <string>Verander Kleur</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>30</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="saveRGBBtn">
+             <property name="text">
+              <string>Opslaan kleur</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- Tafelstatus -->
+    <item>
+     <widget class="QGroupBox" name="groupBoxTafel">
+      <property name="title">
+       <string>Tafelstatus</string>
+      </property>
+      <layout class="QHBoxLayout" name="layoutTafel">
+       <item>
+        <layout class="QVBoxLayout" name="tafel1">
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="tafel1Status">
+           <property name="text">
+            <string>Tafel staat UIT</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="tafel1Toggle">
+           <property name="text">
+            <string>Toggle tafel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="tafel2">
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="tafel2Status">
+           <property name="text">
+            <string>Tafel staat UIT</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="tafel2Toggle">
+           <property name="text">
+            <string>Toggle tafel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="tafel3">
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="tafel3Status">
+           <property name="text">
+            <string>Tafel staat UIT</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="tafel3Toggle">
+           <property name="text">
+            <string>Toggle tafel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+    <!-- Instellingen knop -->
+    <item>
+     <widget class="QPushButton" name="btnOpenSettings">
+      <property name="text">
+       <string>Instellingen</string>
+      </property>
+     </widget>
+    </item>
+
+    <!-- Lichtkrant -->
     <item>
      <widget class="QGroupBox" name="groupBoxLichtkrant">
       <property name="title">
@@ -35,16 +206,13 @@
       </layout>
      </widget>
     </item>
+
    </layout>
   </widget>
+
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>24</height>
-    </rect>
+    <rect><x>0</x><y>0</y><width>800</width><height>21</height></rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
