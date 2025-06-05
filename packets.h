@@ -158,7 +158,7 @@ struct sensor_packet_rgb_light {
 
 struct sensor_packet_lichtkrant {
     struct sensor_metadata metadata;
-    char text[32];
+    char text[16];
 } __attribute__((packed));
 // --- End Structures ---
 
