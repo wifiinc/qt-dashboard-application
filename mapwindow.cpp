@@ -55,8 +55,8 @@ MapWindow::MapWindow(QWidget *parent)
     HoverLabel::LampInfo info10; info10.point = VenPos; info10.statusText = "Ven kapot";
 
     // 8) Voeg ze toe aan lampList
-    imageLabel->lampList.clear();
-    imageLabel->lampList << info1 << info2 << info3 << info4 << info5 << info6 << info7 <<info8 <<info9 << info10;
+    imageLabel->Apparaten.clear();
+    imageLabel->Apparaten << info1 << info2 << info3 << info4 << info5 << info6 << info7 <<info8 <<info9 << info10;
 
     // 9) Voeg de HoverLabel toe aan de layout
     layout->addWidget(imageLabel);
@@ -73,8 +73,8 @@ MapWindow::~MapWindow()
 void MapWindow::updateLampStatus(int lampIndex, const QString &nieuwTekst)
 {
     // Als je later in MainWindow een signaal stuurt dat lampIndex (0..2) is veranderd:
-    if (lampIndex >= 0 && lampIndex < imageLabel->lampList.size()) {
-        imageLabel->lampList[lampIndex].statusText = nieuwTekst;
+    if (lampIndex >= 0 && lampIndex < imageLabel->Apparaten.size()) {
+        imageLabel->Apparaten[lampIndex].statusText = nieuwTekst;
         // Repaint niet per se nodig, want de tooltip verschijnt pas bij hover.
         imageLabel->update();
     }

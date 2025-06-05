@@ -5,7 +5,7 @@
 #include <QMouseEvent>
 #include <QToolTip>
 #include <QPainter>
-#include <QResizeEvent>   // toegevoegd zodat resizeEvent() beschikbaar is
+#include <QResizeEvent>
 
 /*
   HoverLabel: een subclass van QLabel die:
@@ -39,7 +39,7 @@ public:
     };
 
     // Lijst van alle lampjes in originele afbeeldings‐coördinaten
-    QVector<LampInfo> lampList;
+    QVector<LampInfo> Apparaten;
 
     // De niet‐geschaalde QPixmap (originele plattegrond), bijv. 1200×800 pixels
     QPixmap originalPixmap;
@@ -52,7 +52,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override
     {
         // 1) Als we geen originele pixmap hebben of geen lampjes, laat base class afhandelen
-        if (originalPixmap.isNull() || lampList.isEmpty()) {
+        if (originalPixmap.isNull() || Apparaten.isEmpty()) {
             QLabel::mouseMoveEvent(event);
             return;
         }
@@ -94,8 +94,8 @@ protected:
 
         // 7) Loop door alle lampjes: kijk of afstand ≤ hoverRadius
         bool found = false;
-        for (int i = 0; i < lampList.size(); ++i) {
-            const LampInfo &li = lampList[i];
+        for (int i = 0; i < Apparaten.size(); ++i) {
+            const LampInfo &li = Apparaten[i];
             qreal afstand = QLineF(li.point, posInOrig).length();
             if (afstand <= hoverRadius) {
                 // We hoveren over lampje i
@@ -126,7 +126,7 @@ protected:
         QLabel::paintEvent(ev);
 
         // 2) Als we op een lampje hoveren (hoveredLampIndex ≥ 0), teken een cirkel
-        if (hoveredLampIndex >= 0 && hoveredLampIndex < lampList.size()) {
+        if (hoveredLampIndex >= 0 && hoveredLampIndex < Apparaten.size()) {
             QPainter painter(this);
             painter.setRenderHint(QPainter::Antialiasing);
 
@@ -138,7 +138,7 @@ protected:
             qreal scaleX = static_cast<qreal>(scaledSize.width())  / static_cast<qreal>(origSize.width());
             qreal scaleY = static_cast<qreal>(scaledSize.height()) / static_cast<qreal>(origSize.height());
 
-            QPointF origPt = lampList[hoveredLampIndex].point;
+            QPointF origPt = Apparaten[hoveredLampIndex].point;
             QPoint  screenPt(
                 qRound(origPt.x() * scaleX) + xOffset,
                 qRound(origPt.y() * scaleY) + yOffset
