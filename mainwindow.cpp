@@ -231,6 +231,11 @@ void MainWindow::on_saveRGBBtn_clicked() {
     pakket.data.rgb_light.red_state = static_cast<uint8_t>(r);
     pakket.data.rgb_light.green_state = static_cast<uint8_t>(g);
     pakket.data.rgb_light.blue_state = static_cast<uint8_t>(b);
+    if (mapWindow) {
+        QString message = QString("RGB ingesteld op R:%1 G:%2 B:%3").arg(r).arg(g).arg(b);
+        mapWindow->updateDeviceStatus(3, message);
+        mapWindow->updateDeviceStatus(4, message);
+    }
 
     client.sendPacket(pakket);
 }
