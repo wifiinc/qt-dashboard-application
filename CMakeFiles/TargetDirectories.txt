@@ -1,8 +1,0 @@
-/mnt/c/Users/daanbreur/qt-dashboard-application/CMakeFiles/dashboard.dir
-/mnt/c/Users/daanbreur/qt-dashboard-application/CMakeFiles/edit_cache.dir
-/mnt/c/Users/daanbreur/qt-dashboard-application/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/daanbreur/qt-dashboard-application/CMakeFiles/list_install_components.dir
-/mnt/c/Users/daanbreur/qt-dashboard-application/CMakeFiles/install.dir
-/mnt/c/Users/daanbreur/qt-dashboard-application/CMakeFiles/install/local.dir
-/mnt/c/Users/daanbreur/qt-dashboard-application/CMakeFiles/install/strip.dir
-/mnt/c/Users/daanbreur/qt-dashboard-application/CMakeFiles/dashboard_autogen.dir
