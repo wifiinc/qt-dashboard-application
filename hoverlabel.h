@@ -106,7 +106,7 @@ protected:
                 hoveredLampIndex = -1;
                 update(); // cirkel verwijderen
             }
-           QToolTip::hideText();
+            QToolTip::hideText();
         }
     }
 

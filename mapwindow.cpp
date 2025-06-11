@@ -44,8 +44,8 @@ MapWindow::MapWindow(QWidget *parent)
 
     // 7) Maak voor elk apparaat een DeviceInfo met coördinaten + statusText
     HoverLabel::DeviceInfo info1; info1.point = lamp1Pos; info1.statusText = "Lamp 1: UIT";
-    HoverLabel::DeviceInfo info2; info2.point = lamp2Pos; info2.statusText = "Lamp 2: AAN";
-    HoverLabel::DeviceInfo info3; info3.point = lamp3Pos; info3.statusText = "Lamp 3: DIM 50%";
+    HoverLabel::DeviceInfo info2; info2.point = lamp2Pos; info2.statusText = "Lamp 2: UIT";
+    HoverLabel::DeviceInfo info3; info3.point = lamp3Pos; info3.statusText = "Lamp 3: UIT";
     HoverLabel::DeviceInfo info4; info4.point = RGB1Pos; info4.statusText = "Rgbww : UIT";
     HoverLabel::DeviceInfo info5; info5.point = RGB2Pos; info5.statusText = "Rgbww : UIT";
     HoverLabel::DeviceInfo info6; info6.point = Beweging1Pos; info6.statusText = "Geen beweging";
@@ -75,6 +75,7 @@ void MapWindow::updateDeviceStatus(int deviceIndex, const QString &nieuwTekst)
     // Als je later in MainWindow een signaal stuurt dat deviceIndex (0..n) is veranderd:
     if (deviceIndex >= 0 && deviceIndex < imageLabel->Apparaten.size()) {
         imageLabel->Apparaten[deviceIndex].statusText = nieuwTekst;
+        qDebug() << imageLabel->Apparaten[deviceIndex].statusText;
         // Repaint niet per se nodig, want de tooltip verschijnt pas bij hover.
         imageLabel->update();
     }

@@ -277,6 +277,10 @@ void MainWindow::on_tafel1Toggle_clicked() {
   pakket.data.light.metadata.sensor_type = SensorType::LIGHT;
   pakket.data.light.metadata.sensor_id = static_cast<uint8_t>(tafel1SensorId);
   pakket.data.light.target_state = tafel1State ? 1 : 0;
+  if (mapWindow) {
+      mapWindow->updateDeviceStatus(0, tafel1State ? "Lamp 1: AAN" : "Lamp 1: UIT");
+  }
+
 
   client.sendPacket(pakket);
 }
@@ -292,6 +296,9 @@ void MainWindow::on_tafel2Toggle_clicked() {
   pakket.data.light.metadata.sensor_type = SensorType::LIGHT;
   pakket.data.light.metadata.sensor_id = static_cast<uint8_t>(tafel2SensorId);
   pakket.data.light.target_state = tafel2State ? 1 : 0;
+  if (mapWindow) {
+      mapWindow->updateDeviceStatus(1, tafel2State ? "Lamp 2: AAN" : "Lamp 2: UIT");
+  }
 
   client.sendPacket(pakket);
 }
@@ -300,6 +307,9 @@ void MainWindow::on_tafel3Toggle_clicked() {
   tafel3State = !tafel3State;
   ui->tafel3Status->setText(tafel3State ? "Tafel staat AAN"
                                         : "Tafel staat UIT");
+  if (mapWindow) {
+      mapWindow->updateDeviceStatus(2, tafel3State ? "Lamp 3: AAN" : "Lamp 3: UIT");
+  }
 
   sensor_packet pakket;
   pakket.header.ptype = PacketType::DASHBOARD_POST;
