@@ -30,12 +30,16 @@ bool Tcpsocket::connectToServer()
 
 bool Tcpsocket::sendPacket(const sensor_packet& packet) {
     if (socket_->state() != QAbstractSocket::ConnectedState) {
-        qDebug() << "Socket is not connected. Cannot send packet." << socketHost << ":" << socketPort;
+        qDebug() << "Socket is not connected. Cannot send packet.";
         return false;
     }
 
     int totalSize = sizeof(sensor_header) + packet.header.length;
     QByteArray buffer(reinterpret_cast<const char*>(&packet), totalSize);
+
+    //HEXDUMP
+    qDebug() << "Verstuurd packet (" << totalSize << " bytes):";
+    qDebug() << buffer.toHex(' ');
 
     qint64 bytesWritten = socket_->write(buffer);
     socket_->flush();
