@@ -6,6 +6,8 @@
 
 #include "Tcpsocket.h"
 #include "settingswindow.h"
+#include "mapwindow.h"
+#include "hoverlabel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -40,10 +42,12 @@ private slots:
 
     void on_btnVerzendLichtkrant_clicked();
 
+
 private:
     Ui::MainWindow* ui;
     Tcpsocket client;
     SettingsWindow* settingsWindow;
+    MapWindow *mapWindow;
 
     int rgbSensorId;
     QString bridgeIp;

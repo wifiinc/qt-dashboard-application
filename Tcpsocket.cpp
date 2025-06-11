@@ -1,4 +1,5 @@
 #include "Tcpsocket.h"
+#include <cstring>
 #include <QDebug>
 
 Tcpsocket::Tcpsocket(const QString &host, int port)
@@ -77,7 +78,7 @@ void Tcpsocket::onReadyRead(){
 
         //lees header
         sensor_header header;
-        std::memcpy(&header, buffer.constData(), sizeof(sensor_header));
+        memcpy(&header, buffer.constData(), sizeof(sensor_header));
         int fullPacketSize = sizeof(sensor_header) + header.length;
 
         //hebben we al genoeg voor het hele pakket?
@@ -91,7 +92,7 @@ void Tcpsocket::onReadyRead(){
 
         //zet om naar struct
         sensor_packet packet;
-        std::memcpy(&packet, packetData.constData(), fullPacketSize);
+        memcpy(&packet, packetData.constData(), fullPacketSize);
 
         // emit signaal naar rest
         if (header.ptype == PacketType::DASHBOARD_RESPONSE) {

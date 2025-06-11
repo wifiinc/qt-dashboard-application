@@ -7,7 +7,7 @@
 #include <QObject>
 #include <QString>
 #include <QTcpSocket>
-#include <QTimer.h>
+#include <QTimer>
 
 class Tcpsocket : public QObject
 {

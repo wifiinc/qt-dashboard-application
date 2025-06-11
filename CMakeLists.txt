@@ -14,7 +14,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
-
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -25,6 +24,10 @@ set(PROJECT_SOURCES
         settingswindow.cpp
         settingswindow.h
         settingswindow.ui
+        mapwindow.h
+        mapwindow.cpp
+        hoverlabel.h
+        hoverlabel.cpp
         packets.h
         icon.png
         resources.qrc
