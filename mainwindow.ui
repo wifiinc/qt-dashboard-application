@@ -38,13 +38,6 @@
              </property>
             </spacer>
            </item>
-           <item alignment="Qt::AlignmentFlag::AlignHCenter">
-            <widget class="QCheckBox" name="checkBoxLightOn">
-             <property name="text">
-              <string>Lamp aan</string>
-             </property>
-            </widget>
-           </item>
            <item>
             <spacer name="verticalSpacer_4">
              <property name="orientation">

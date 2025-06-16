@@ -62,7 +62,7 @@ private:
     int tafel1SensorId;
     int tafel2SensorId;
     int tafel3SensorId;
-    int VentilatorId;
+    int VentilatorId = 106;
     int ventilatorState = 0;
 
     QColor huidigekleurRGBLed = Qt::white;
