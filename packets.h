@@ -23,6 +23,7 @@ enum class SensorType : uint8_t {
     MOTION = 7,
     RGB_LIGHT = 8,
     LICHTKRANT = 9,
+    FAN = 10,
 };
 
 enum class PacketType : uint8_t {
@@ -159,6 +160,19 @@ struct sensor_packet_rgb_light {
 struct sensor_packet_lichtkrant {
     struct sensor_metadata metadata;
     char text[16];
+} __attribute__((packed));
+// --- End Structures ---
+
+/**
+ * @struct sensor_packet_fan
+ * @brief Structure for packets intended to control the fan speed
+ * @details Send the fan speed (0 -> 255) using this packet
+ * @ingroup Packets
+ */
+struct sensor_packet_fan {
+    struct sensor_metadata metadata;
+    /** @brief Target speed of the fan (0 -> 255 = 0 -> 100%) */
+    uint8_t speed;
 } __attribute__((packed));
 // --- End Structures ---
 

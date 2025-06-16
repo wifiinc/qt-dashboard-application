@@ -41,22 +41,24 @@ MapWindow::MapWindow(QWidget *parent)
     QPointF CO2Pos(380.0,  50.0);
     QPointF TEMPPos(168.0,  45.0);
     QPointF VenPos(27.0,  73.0);
+    QPointF Lichtkrant(27.0,  285.0);
 
     // 7) Maak voor elk apparaat een DeviceInfo met coördinaten + statusText
     HoverLabel::DeviceInfo info1; info1.point = lamp1Pos; info1.statusText = "Lamp 1: UIT";
     HoverLabel::DeviceInfo info2; info2.point = lamp2Pos; info2.statusText = "Lamp 2: UIT";
     HoverLabel::DeviceInfo info3; info3.point = lamp3Pos; info3.statusText = "Lamp 3: UIT";
-    HoverLabel::DeviceInfo info4; info4.point = RGB1Pos; info4.statusText = "Rgbww : UIT";
-    HoverLabel::DeviceInfo info5; info5.point = RGB2Pos; info5.statusText = "Rgbww : UIT";
+    HoverLabel::DeviceInfo info4; info4.point = RGB1Pos; info4.statusText = "RGB ingesteld op R:%1 G:%2 B:%3";
+    HoverLabel::DeviceInfo info5; info5.point = RGB2Pos; info5.statusText = "RGB ingesteld op R:%1 G:%2 B:%3";
     HoverLabel::DeviceInfo info6; info6.point = Beweging1Pos; info6.statusText = "Geen beweging";
     HoverLabel::DeviceInfo info7; info7.point = Beweging2Pos; info7.statusText = "Geen beweging";
-    HoverLabel::DeviceInfo info8; info8.point = CO2Pos; info8.statusText = "CO2 waarde kapot";
-    HoverLabel::DeviceInfo info9; info9.point = TEMPPos; info9.statusText = "Geen temp";
-    HoverLabel::DeviceInfo info10; info10.point = VenPos; info10.statusText = "Ven kapot";
+    HoverLabel::DeviceInfo info8; info8.point = CO2Pos; info8.statusText = "CO2 waar;de kapot";
+    HoverLabel::DeviceInfo info9; info9.point = TEMPPos; info9.statusText = "Temp is: 20 graden";
+    HoverLabel::DeviceInfo info10; info10.point = VenPos; info10.statusText = "Ventilator uit";
+    HoverLabel::DeviceInfo info11; info11.point = Lichtkrant; info11.statusText = "Lichtkrant: test";
 
     // 8) Voeg ze toe aan Apparaten
     imageLabel->Apparaten.clear();
-    imageLabel->Apparaten << info1 << info2 << info3 << info4 << info5 << info6 << info7 <<info8 <<info9 << info10;
+    imageLabel->Apparaten << info1 << info2 << info3 << info4 << info5 << info6 << info7 <<info8 <<info9 << info10 << info11;
 
     // 9) Voeg de HoverLabel toe aan de layout
     layout->addWidget(imageLabel);

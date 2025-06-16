@@ -77,6 +77,7 @@ void MainWindow::setSensorList() {
                           {SensorType::LIGHT, tafel1SensorId},
                           {SensorType::LIGHT, tafel2SensorId},
                           {SensorType::LIGHT, tafel3SensorId},
+                          {SensorType::FAN, VentilatorId},
                           });
 }
 
@@ -231,6 +232,11 @@ void MainWindow::on_saveRGBBtn_clicked() {
     pakket.data.rgb_light.red_state = static_cast<uint8_t>(r);
     pakket.data.rgb_light.green_state = static_cast<uint8_t>(g);
     pakket.data.rgb_light.blue_state = static_cast<uint8_t>(b);
+    if (mapWindow) {
+        QString message = QString("RGB ingesteld op R:%1 G:%2 B:%3").arg(r).arg(g).arg(b);
+        mapWindow->updateDeviceStatus(3, message);
+        mapWindow->updateDeviceStatus(4, message);
+    }
 
     client.sendPacket(pakket);
 }
@@ -316,5 +322,40 @@ void MainWindow::on_btnVerzendLichtkrant_clicked() {
     pakket.data.lichtkrant.metadata.sensor_id = 255;
     std::strncpy(pakket.data.lichtkrant.text, boodschap.toStdString().c_str(), sizeof(pakket.data.lichtkrant.text) - 1);
     pakket.data.lichtkrant.text[sizeof(pakket.data.lichtkrant.text) - 1] = '\0';
+    if (mapWindow) {
+        QString message = QString("Lichtkrant:%1").arg(boodschap);
+        mapWindow->updateDeviceStatus(10, message);
+    }
     client.sendPacket(pakket);
 }
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->ventilatorState->setText(ventilatorState ? "Ventilator staat AAN"
+                                                 : "Ventilator staat UIT");
+    QString ventilatorText = QString("Ventilator speed:%1").arg(ventilatorState);
+    if (mapWindow) {
+        mapWindow->updateDeviceStatus(9, ventilatorText);
+    }
+
+    sensor_packet pakket;
+    pakket.header.ptype = PacketType::DASHBOARD_POST;
+    pakket.header.length = sizeof(sensor_packet_fan);
+    pakket.data.light.metadata.sensor_type = SensorType::FAN;
+    pakket.data.light.metadata.sensor_id = static_cast<uint8_t>(VentilatorId);
+    pakket.data.light.target_state = ventilatorState;
+
+    client.sendPacket(pakket);
+}
+
+
+void MainWindow::on_VentilatorSpeed_valueChanged(int arg1)
+{
+    ventilatorState = arg1;
+}
+
+void MainWindow::on_VentilatorSpeed_2_valueChanged(int value)
+{
+    ventilatorState = value;
+}
+

@@ -6,14 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>892</width>
+    <height>744</height>
    </rect>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="mainLayout">
-
-    <!-- RGB Verlichting -->
     <item>
      <widget class="QGroupBox" name="groupBoxRGB">
       <property name="title">
@@ -30,7 +28,7 @@
            <item>
             <spacer name="verticalSpacer_2">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -40,17 +38,10 @@
              </property>
             </spacer>
            </item>
-           <item alignment="Qt::AlignHCenter">
-            <widget class="QCheckBox" name="checkBoxLightOn">
-             <property name="text">
-              <string>Lamp aan</string>
-             </property>
-            </widget>
-           </item>
            <item>
             <spacer name="verticalSpacer_4">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -70,7 +61,7 @@
            <item>
             <spacer name="verticalSpacer_3">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -90,7 +81,7 @@
            <item>
             <spacer name="verticalSpacer">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -107,8 +98,6 @@
       </layout>
      </widget>
     </item>
-
-    <!-- Tafelstatus -->
     <item>
      <widget class="QGroupBox" name="groupBoxTafel">
       <property name="title">
@@ -117,7 +106,7 @@
       <layout class="QHBoxLayout" name="layoutTafel">
        <item>
         <layout class="QVBoxLayout" name="tafel1">
-         <item alignment="Qt::AlignHCenter">
+         <item alignment="Qt::AlignmentFlag::AlignHCenter">
           <widget class="QLabel" name="tafel1Status">
            <property name="text">
             <string>Tafel staat UIT</string>
@@ -135,7 +124,7 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="tafel2">
-         <item alignment="Qt::AlignHCenter">
+         <item alignment="Qt::AlignmentFlag::AlignHCenter">
           <widget class="QLabel" name="tafel2Status">
            <property name="text">
             <string>Tafel staat UIT</string>
@@ -153,7 +142,7 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="tafel3">
-         <item alignment="Qt::AlignHCenter">
+         <item alignment="Qt::AlignmentFlag::AlignHCenter">
           <widget class="QLabel" name="tafel3Status">
            <property name="text">
             <string>Tafel staat UIT</string>
@@ -172,8 +161,6 @@
       </layout>
      </widget>
     </item>
-
-    <!-- Instellingen knop -->
     <item>
      <widget class="QPushButton" name="btnOpenSettings">
       <property name="text">
@@ -181,8 +168,6 @@
       </property>
      </widget>
     </item>
-
-    <!-- Lichtkrant -->
     <item>
      <widget class="QGroupBox" name="groupBoxLichtkrant">
       <property name="title">
@@ -206,17 +191,57 @@
       </layout>
      </widget>
     </item>
-
+    <item>
+     <widget class="QGroupBox" name="groupBoxVentilator">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Ventilator</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="ventilatorState">
+         <property name="text">
+          <string>Ventilator staat UIT</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="VentilatorSpeed_2">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Send ventilator</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
-
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>25</height>
+     <width>892</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
