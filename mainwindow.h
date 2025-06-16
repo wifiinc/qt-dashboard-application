@@ -42,6 +42,9 @@ private slots:
 
     void on_btnVerzendLichtkrant_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_VentilatorSpeed_valueChanged(int arg1);
 
 private:
     Ui::MainWindow* ui;
@@ -55,6 +58,8 @@ private:
     int tafel1SensorId;
     int tafel2SensorId;
     int tafel3SensorId;
+    int VentilatorId;
+    int ventilatorState = 0;
 
     QColor huidigekleurRGBLed = Qt::white;
     bool tafel1State = false;
