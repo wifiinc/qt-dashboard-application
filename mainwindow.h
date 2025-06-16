@@ -46,6 +46,10 @@ private slots:
 
     void on_VentilatorSpeed_valueChanged(int arg1);
 
+    void on_VentilatorSpeed_2_actionTriggered(int action);
+
+    void on_VentilatorSpeed_2_valueChanged(int value);
+
 private:
     Ui::MainWindow* ui;
     Tcpsocket client;
