@@ -348,12 +348,6 @@ void MainWindow::on_pushButton_clicked()
     client.sendPacket(pakket);
 }
 
-
-void MainWindow::on_VentilatorSpeed_valueChanged(int arg1)
-{
-    ventilatorState = arg1;
-}
-
 void MainWindow::on_VentilatorSpeed_2_valueChanged(int value)
 {
     ventilatorState = value;
